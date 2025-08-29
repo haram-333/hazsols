@@ -88,7 +88,7 @@ export default function Home() {
       
       // Create more engaging movement patterns
       const movementType = Math.floor(Math.random() * 4); // 0-3 for different patterns
-      let path;
+      let path: { x: number; y: number }[] = [];
       
       switch(movementType) {
         case 0: // Horizontal zigzag
