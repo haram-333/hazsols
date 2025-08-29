@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ChevronDown, ArrowRight, Play, Menu, X } from 'lucide-react';
+import { ArrowRight, Play, Menu, X } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import Lenis from 'lenis';
@@ -19,7 +19,7 @@ export default function Home() {
     });
 
     // Listen for the scroll event and log the event data
-    lenis.on('scroll', (e: any) => {
+    lenis.on('scroll', (e: { scroll: number; limit: number; velocity: number; direction: number }) => {
       console.log(e);
     });
 
