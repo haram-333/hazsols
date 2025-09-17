@@ -56,35 +56,35 @@ html.lenis {
 
 /* Global font family - Force Josefin Sans everywhere */
 * {
-  font-family: "Josefin Sans", sans-serif !important;
+  font-family: var(--font-josefin-sans), sans-serif !important;
 }
 
 html {
-  font-family: "Josefin Sans", sans-serif !important;
+  font-family: var(--font-josefin-sans), sans-serif !important;
 }
 
 body {
-  font-family: "Josefin Sans", sans-serif !important;
+  font-family: var(--font-josefin-sans), sans-serif !important;
 }
 
 /* Override Tailwind's font family */
 .font-sans, .font-mono, .font-serif {
-  font-family: "Josefin Sans", sans-serif !important;
+  font-family: var(--font-josefin-sans), sans-serif !important;
 }
 
 /* Ensure all text elements use Josefin Sans */
 h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select, label, li, ul, ol {
-  font-family: "Josefin Sans", sans-serif !important;
+  font-family: var(--font-josefin-sans), sans-serif !important;
 }
 
 /* Override any Tailwind classes that might affect font */
 .antialiased, .text-sm, .text-base, .text-lg, .text-xl, .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl {
-  font-family: "Josefin Sans", sans-serif !important;
+  font-family: var(--font-josefin-sans), sans-serif !important;
 }
 
 /* Force font on all possible elements */
 [class*="text-"], [class*="font-"] {
-  font-family: "Josefin Sans", sans-serif !important;
+  font-family: var(--font-josefin-sans), sans-serif !important;
 }
 
 /* Text selection styling */

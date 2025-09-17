@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
-    particlesJS: any;
+    particlesJS: (id: string, config: object) => void;
   }
 }
 

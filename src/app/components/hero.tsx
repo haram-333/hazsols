@@ -20,7 +20,7 @@ export default function Hero() {
       <div className="hero-content">
         <div className="hero-text">
           <h1 className="hero-title">
-            <span className="hero-title-line">Drive Tomorrow's</span>
+            <span className="hero-title-line">Drive Tomorrow&apos;s</span>
             <span className="hero-title-line hero-title-emphasis">Possibilities</span>
           </h1>
           

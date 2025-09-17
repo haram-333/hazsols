@@ -1,5 +1,12 @@
 import "./globals.css";
 import LenisProvider from "./components/lenis-provider";
+import { Josefin_Sans } from 'next/font/google';
+
+const josefinSans = Josefin_Sans({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
+  variable: '--font-josefin-sans',
+});
 
 
 export default function RootLayout({
@@ -8,14 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en" data-theme="light" className={josefinSans.variable}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-          rel="stylesheet"
-        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -31,7 +32,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased" style={{ fontFamily: '"Josefin Sans", sans-serif !important' }} suppressHydrationWarning={true}>
+      <body className="antialiased" suppressHydrationWarning={true}>
         <LenisProvider>
           {children}
         </LenisProvider>
