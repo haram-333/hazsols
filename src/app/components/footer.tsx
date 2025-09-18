@@ -19,7 +19,7 @@ export default function Footer() {
             <div className="footer-about">
               <h3 className="section-title">About HazSols</h3>
               <p className="about-text">
-                We're a dynamic startup focused on delivering cutting-edge technology solutions. 
+                We&apos;re a dynamic startup focused on delivering cutting-edge technology solutions. 
                 Our team combines innovation with expertise to help businesses transform their digital presence.
               </p>
             </div>
