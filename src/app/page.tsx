@@ -9,6 +9,7 @@ import CounterSection from './components/counter-section';
 import Insights from './components/Insights';
 import ContactForm from './components/contact-form';
 import Footer from './components/footer';
+import ScrollProgress from './components/scroll-progress';
 
 export default function Page() {
   return (
@@ -22,6 +23,7 @@ export default function Page() {
       <Insights />
       <ContactForm />
       <Footer />
+      <ScrollProgress />
     </>
   );
 }
