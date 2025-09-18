@@ -7,6 +7,8 @@ import Expertise from './components/expertise';
 import InsightsSection from './components/insights-section';
 import CounterSection from './components/counter-section';
 import Insights from './components/Insights';
+import ContactForm from './components/contact-form';
+import Footer from './components/footer';
 
 export default function Page() {
   return (
@@ -18,6 +20,8 @@ export default function Page() {
       <InsightsSection />
       <CounterSection />
       <Insights />
+      <ContactForm />
+      <Footer />
     </>
   );
 }
