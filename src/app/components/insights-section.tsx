@@ -121,16 +121,19 @@ export default function InsightsSection() {
       // No animation needed, it stays in place
 
       // Parallax effect for the background circle
-      gsap.to(sectionRef.current?.querySelector('.insights-bg-circle'), {
-        y: -100,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1
-        }
-      });
+      const bgCircle = sectionRef.current?.querySelector('.insights-bg-circle');
+      if (bgCircle) {
+        gsap.to(bgCircle, {
+          y: -100,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1
+          }
+        });
+      }
 
     }, sectionRef);
 

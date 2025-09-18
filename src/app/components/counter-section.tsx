@@ -108,7 +108,7 @@ export default function CounterSection() {
           {/* Right side - Counter grid */}
           <div className="counter-right">
             <div className="counter-grid">
-              {counters.map((item, index) => (
+              {counters.map((item) => (
                 <div key={item.id} className="counter-item">
                   <div className="counter-number">
                     {item.currentNumber}{item.suffix}
