@@ -18,8 +18,6 @@ export default function Page() {
       <InsightsSection />
       <CounterSection />
       <Insights />
-      <InsightsSection />
-      <CounterSection />
     </>
   );
 }
