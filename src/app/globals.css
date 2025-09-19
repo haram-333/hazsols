@@ -737,7 +737,6 @@ ol {
   height: 3px;
   background: var(--text-color);
   transition: all 0.3s ease;
-  transform-origin: center;
 }
 
 .hamburger-line.active:nth-child(1) {
@@ -830,7 +829,7 @@ ol {
 }
 
 .mobile-dropdown-content.active {
-  max-height: 1000px;
+  max-height: 2000px;
 }
 
 .mobile-dropdown-section {
@@ -2846,7 +2845,7 @@ ol {
 .service-overview {
   width: 100%;
   min-height: 100vh;
-  background: #000000;
+  background: var(--bg-color);
   position: relative;
 }
 
@@ -2859,7 +2858,7 @@ ol {
 }
 
 .overview-content {
-  background: #000000;
+  background: var(--bg-color);
   padding: 40px;
   display: flex;
   align-items: flex-start;
@@ -2879,7 +2878,7 @@ ol {
 }
 
 .overview-description {
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 2rem;
   line-height: 1.6;
   margin-bottom: 35px;
@@ -2887,7 +2886,7 @@ ol {
 }
 
 .strengths-title {
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 1.7rem;
   font-weight: 900;
   margin-bottom: 20px;
@@ -2901,7 +2900,7 @@ ol {
 
 .strength-item {
   margin-bottom: 15px;
-  color: #ffffff;
+  color: var(--text-color);
   line-height: 1.5;
   font-size: 0.9rem;
 }
