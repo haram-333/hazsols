@@ -25,6 +25,28 @@ export default function Header() {
     }
   }, [theme, isThemeLoaded]);
 
+  // Prevent body scroll when any dropdown or mobile menu is open
+  useEffect(() => {
+    const shouldLockScroll = isMobileMenuOpen || isMobileDropdownOpen || isLanguageDropdownOpen;
+    
+    if (shouldLockScroll) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+
+    // Cleanup function to restore scroll when component unmounts
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [isMobileMenuOpen, isMobileDropdownOpen, isLanguageDropdownOpen]);
+
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
