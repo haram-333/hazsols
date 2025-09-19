@@ -132,7 +132,7 @@ export default function ParticleBackground() {
     };
 
     // Check if particles.js is already loaded
-    if (typeof window !== 'undefined' && window.particlesJS) {
+    if (typeof window !== 'undefined' && typeof window.particlesJS === 'function') {
       loadParticles();
     } else {
       // Load particles.js script
@@ -152,7 +152,7 @@ export default function ParticleBackground() {
       
       // Don't remove the script if particles.js is already loaded globally
       // This prevents issues when navigating between pages
-      if (script && script.parentNode && !window.particlesJS) {
+      if (script && script.parentNode && typeof window.particlesJS !== 'function') {
         try {
           document.head.removeChild(script);
         } catch (error) {
