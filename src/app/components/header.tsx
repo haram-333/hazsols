@@ -25,9 +25,9 @@ export default function Header() {
     }
   }, [theme, isThemeLoaded]);
 
-  // Prevent body scroll when any dropdown or mobile menu is open
+  // Prevent body scroll when mobile menu or mobile dropdown is open (not language dropdown)
   useEffect(() => {
-    const shouldLockScroll = isMobileMenuOpen || isMobileDropdownOpen || isLanguageDropdownOpen;
+    const shouldLockScroll = isMobileMenuOpen || isMobileDropdownOpen;
     
     if (shouldLockScroll) {
       document.body.style.overflow = 'hidden';
@@ -45,7 +45,27 @@ export default function Header() {
       document.body.style.position = '';
       document.body.style.width = '';
     };
-  }, [isMobileMenuOpen, isMobileDropdownOpen, isLanguageDropdownOpen]);
+  }, [isMobileMenuOpen, isMobileDropdownOpen]);
+
+  // Close language dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isLanguageDropdownOpen) {
+        const target = event.target as Element;
+        if (!target.closest('.language-switcher')) {
+          setIsLanguageDropdownOpen(false);
+        }
+      }
+    };
+
+    if (isLanguageDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isLanguageDropdownOpen]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -296,6 +316,24 @@ export default function Header() {
                     
                     <a href="/process" className="mobile-nav-link" onClick={toggleMobileMenu}>How We Do It</a>
                     <a href="/contact" className="mobile-nav-link" onClick={toggleMobileMenu}>Contact Us</a>
+                    
+                    {/* Mobile Language Switcher */}
+                    <div className="mobile-language-switcher">
+                        <button 
+                            className="mobile-language-toggle" 
+                            onClick={toggleLanguageDropdown}
+                            aria-label="Change language"
+                        >
+                            <span className="mobile-language-icon">🌐</span>
+                            <span className="mobile-current-lang">English</span>
+                        </button>
+                        <div className={`mobile-language-dropdown ${isLanguageDropdownOpen ? 'active' : ''}`}>
+                            <a href="#" className="mobile-language-option" onClick={toggleMobileMenu}>English</a>
+                            <a href="#" className="mobile-language-option" onClick={toggleMobileMenu}>العربية</a>
+                            <a href="#" className="mobile-language-option" onClick={toggleMobileMenu}>Español</a>
+                            <a href="#" className="mobile-language-option" onClick={toggleMobileMenu}>Français</a>
+                        </div>
+                    </div>
                 </nav>
             </div>
         </main>
