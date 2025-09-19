@@ -76,6 +76,13 @@ export default function Footer() {
             </a>
           </div>
         </div>
+
+        {/* Copyright Section */}
+        <div className="footer-copyright">
+          <p className="copyright-text">
+            © {new Date().getFullYear()} HazSols. All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );
