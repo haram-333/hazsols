@@ -2,6 +2,7 @@ import "./globals.css";
 import LenisProvider from "./components/lenis-provider";
 import LoadingBar from "./components/loading-bar";
 import { Josefin_Sans } from 'next/font/google';
+import { Suspense } from 'react';
 
 const josefinSans = Josefin_Sans({
   subsets: ['latin'],
@@ -34,7 +35,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased" suppressHydrationWarning={true}>
-        <LoadingBar />
+        <Suspense fallback={null}>
+          <LoadingBar />
+        </Suspense>
         <LenisProvider>
           {children}
         </LenisProvider>
