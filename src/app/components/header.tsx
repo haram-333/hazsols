@@ -1,5 +1,6 @@
 "use client";
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function Header() {
@@ -48,15 +49,15 @@ export default function Header() {
             <header className="header">
                 <div className="container">
                     <div className="header-logo-wrapper" style={{ overflow: 'hidden' }}>
-                        <a href="/" className="header-logo flex items-center">
+                        <Link href="/" className="header-logo flex items-center">
                             <Image src="/logo.png" alt="Logo" width={65} height={65} />
                             <Image src="/full-logo.png" alt="Logo" width={200} height={200} className='hidden' />
-                        </a>
+                        </Link>
                     </div>
                     <div className="links">
                         <nav className="nav-links">
                             <div className="nav-link-wrapper" style={{ overflow: 'hidden' }}>
-                                <a href="/" className="nav-link">Home</a>
+                                <Link href="/" className="nav-link">Home</Link>
                             </div>
                             <div className="nav-link-wrapper" style={{ overflow: 'hidden' }}>
                                 <a href="/about" className="nav-link">About</a>
@@ -212,7 +213,7 @@ export default function Header() {
             {/* Mobile Menu */}
             <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
                 <nav className="mobile-nav">
-                    <a href="/" className="mobile-nav-link" onClick={toggleMobileMenu}>Home</a>
+                    <Link href="/" className="mobile-nav-link" onClick={toggleMobileMenu}>Home</Link>
                     <a href="/about" className="mobile-nav-link" onClick={toggleMobileMenu}>About</a>
                     
                     <div className="mobile-dropdown">

@@ -2,22 +2,6 @@
 import Image from 'next/image';
 import ParticleBackground from './particle-background';
 
-const logos = [
-  { name: 'React', src: '/images/React.png' },
-  { name: 'Next.js', src: '/images/Next.js.png' },
-  { name: 'Vue.js', src: '/images/Vue.js.png' },
-  { name: 'Angular', src: '/images/Angular.png' },
-  { name: 'JavaScript', src: '/images/JavaScript.png' },
-  { name: 'TypeScript', src: '/images/TypeScript.png' },
-  { name: 'Flutter', src: '/images/Flutter.png' },
-  { name: 'Android', src: '/images/Android.png' },
-  { name: 'Java', src: '/images/Java.png' },
-  { name: 'Kotlin', src: '/images/Kotlin.png' },
-  { name: 'WordPress', src: '/images/WordPress.png' },
-  { name: 'Bootstrap', src: '/images/Bootstrap.png' },
-  { name: 'Tailwind CSS', src: '/images/Tailwind CSS.png' },
-  { name: 'Svelte', src: '/images/Svelte.png' },
-];
 
 // Pre-defined shuffled arrays to avoid hydration mismatch
 const shuffledLogos1 = [
