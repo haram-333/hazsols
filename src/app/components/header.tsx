@@ -1,6 +1,5 @@
 "use client";
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function Header() {
@@ -43,20 +42,21 @@ export default function Header() {
     const toggleLanguageDropdown = () => {
         setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
     };
+
     return (
         <main className='w-full'>
             <header className="header">
                 <div className="container">
                     <div className="header-logo-wrapper" style={{ overflow: 'hidden' }}>
-                        <div className="header-logo flex items-center">
+                        <a href="/" className="header-logo flex items-center">
                             <Image src="/logo.png" alt="Logo" width={65} height={65} />
                             <Image src="/full-logo.png" alt="Logo" width={200} height={200} className='hidden' />
-                        </div>
+                        </a>
                     </div>
                     <div className="links">
                         <nav className="nav-links">
                             <div className="nav-link-wrapper" style={{ overflow: 'hidden' }}>
-                                <Link href="/" className="nav-link">Home</Link>
+                                <a href="/" className="nav-link">Home</a>
                             </div>
                             <div className="nav-link-wrapper" style={{ overflow: 'hidden' }}>
                                 <a href="/about" className="nav-link">About</a>
@@ -77,6 +77,7 @@ export default function Header() {
                                                     <a href="/services/web/react" className="dropdown-subitem">React</a>
                                                     <a href="/services/web/next" className="dropdown-subitem">Next.js</a>
                                                     <a href="/services/web/wordpress" className="dropdown-subitem">WordPress</a>
+                                                    <a href="/services/web/shopify" className="dropdown-subitem">Shopify</a>
                                                     <a href="/services/web/vue" className="dropdown-subitem">Vue.js</a>
                                                     <a href="/services/web/angular" className="dropdown-subitem">Angular</a>
                                                     <a href="/services/web/svelte" className="dropdown-subitem">Svelte</a>
@@ -92,8 +93,6 @@ export default function Header() {
                                                     <a href="/services/app/flutter" className="dropdown-subitem">Flutter</a>
                                                     <a href="/services/app/react-native" className="dropdown-subitem">React Native</a>
                                                     <a href="/services/app/android" className="dropdown-subitem">Native Android (Java/Kotlin)</a>
-                                                    <a href="/services/app/ios" className="dropdown-subitem">Native iOS (Swift)</a>
-                                                    <a href="/services/app/xamarin" className="dropdown-subitem">Xamarin</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,13 +102,29 @@ export default function Header() {
                                                     <a href="/services/ai" className="dropdown-item">AI</a>
                                                 </div>
                                                 <div className="dropdown-submenu-content">
-                                                    <a href="/services/ai/chatbots" className="dropdown-subitem">AI Chatbots</a>
-                                                    <a href="/services/ai/automation" className="dropdown-subitem">Process Automation</a>
-                                                    <a href="/services/ai/analytics" className="dropdown-subitem">Predictive Analytics</a>
-                                                    <a href="/services/ai/computer-vision" className="dropdown-subitem">Computer Vision</a>
-                                                    <a href="/services/ai/nlp" className="dropdown-subitem">Natural Language Processing</a>
-                                                    <a href="/services/ai/ml-models" className="dropdown-subitem">Custom ML Models</a>
-                                                    <a href="/services/ai/llm-integration" className="dropdown-subitem">LLM Integration</a>
+                                                    <a href="/services/ai/agentic-ai" className="dropdown-subitem">Agentic Ai</a>
+                                                    <a href="/services/ai/manual-to-ai" className="dropdown-subitem">Manual to ai based solutions</a>
+                                                    <a href="/services/ai/custom-integration" className="dropdown-subitem">Custom integration of Ai</a>
+                                                    <a href="/services/ai/nlp" className="dropdown-subitem">NLP</a>
+                                                    <a href="/services/ai/google-cloud-ai" className="dropdown-subitem">Google Cloud AI</a>
+                                                    <a href="/services/ai/machine-learning" className="dropdown-subitem">Machine learning</a>
+                                                    <a href="/services/ai/business-ai" className="dropdown-subitem">Business Ai solutions</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="dropdown-column">
+                                            <div className="dropdown-submenu">
+                                                <div className="dropdown-item-wrapper" style={{ overflow: 'hidden' }}>
+                                                    <a href="/services/custom-software" className="dropdown-item">Custom Software</a>
+                                                </div>
+                                                <div className="dropdown-submenu-content">
+                                                    <a href="/services/custom-software/windows" className="dropdown-subitem">Windows Applications</a>
+                                                    <a href="/services/custom-software/desktop" className="dropdown-subitem">Desktop Applications</a>
+                                                    <a href="/services/custom-software/enterprise" className="dropdown-subitem">Enterprise Software</a>
+                                                    <a href="/services/custom-software/crm" className="dropdown-subitem">CRM Systems</a>
+                                                    <a href="/services/custom-software/erp" className="dropdown-subitem">ERP Solutions</a>
+                                                    <a href="/services/custom-software/integration" className="dropdown-subitem">System Integration</a>
+                                                    <a href="/services/custom-software/automation" className="dropdown-subitem">Process Automation</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -197,7 +212,7 @@ export default function Header() {
             {/* Mobile Menu */}
             <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
                 <nav className="mobile-nav">
-                    <Link href="/" className="mobile-nav-link" onClick={toggleMobileMenu}>Home</Link>
+                    <a href="/" className="mobile-nav-link" onClick={toggleMobileMenu}>Home</a>
                     <a href="/about" className="mobile-nav-link" onClick={toggleMobileMenu}>About</a>
                     
                     <div className="mobile-dropdown">
@@ -232,13 +247,25 @@ export default function Header() {
                             <div className="mobile-dropdown-section">
                                 <a href="/services/ai" className="mobile-dropdown-item" onClick={toggleMobileMenu}>AI</a>
                                 <div className="mobile-dropdown-sublinks">
-                                    <a href="/services/ai/chatbots" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>AI Chatbots</a>
-                                    <a href="/services/ai/automation" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Process Automation</a>
-                                    <a href="/services/ai/analytics" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Predictive Analytics</a>
-                                    <a href="/services/ai/computer-vision" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Computer Vision</a>
-                                    <a href="/services/ai/nlp" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Natural Language Processing</a>
-                                    <a href="/services/ai/ml-models" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Custom ML Models</a>
-                                    <a href="/services/ai/llm-integration" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>LLM Integration</a>
+                                    <a href="/services/ai/agentic-ai" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Agentic Ai</a>
+                                    <a href="/services/ai/manual-to-ai" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Manual to ai based solutions</a>
+                                    <a href="/services/ai/custom-integration" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Custom integration of Ai</a>
+                                    <a href="/services/ai/nlp" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>NLP</a>
+                                    <a href="/services/ai/google-cloud-ai" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Google Cloud AI</a>
+                                    <a href="/services/ai/machine-learning" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Machine learning</a>
+                                    <a href="/services/ai/business-ai" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Business Ai solutions</a>
+                                </div>
+                            </div>
+                            <div className="mobile-dropdown-section">
+                                <a href="/services/custom-software" className="mobile-dropdown-item" onClick={toggleMobileMenu}>Custom Software</a>
+                                <div className="mobile-dropdown-sublinks">
+                                    <a href="/services/custom-software/windows" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Windows Applications</a>
+                                    <a href="/services/custom-software/desktop" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Desktop Applications</a>
+                                    <a href="/services/custom-software/enterprise" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Enterprise Software</a>
+                                    <a href="/services/custom-software/crm" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>CRM Systems</a>
+                                    <a href="/services/custom-software/erp" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>ERP Solutions</a>
+                                    <a href="/services/custom-software/integration" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>System Integration</a>
+                                    <a href="/services/custom-software/automation" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Process Automation</a>
                                 </div>
                             </div>
                         </div>

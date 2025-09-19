@@ -1,5 +1,6 @@
 import "./globals.css";
 import LenisProvider from "./components/lenis-provider";
+import LoadingBar from "./components/loading-bar";
 import { Josefin_Sans } from 'next/font/google';
 
 const josefinSans = Josefin_Sans({
@@ -15,24 +16,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light" className={josefinSans.variable}>
+    <html lang="en" className={josefinSans.variable} suppressHydrationWarning={true}>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  var theme = localStorage.getItem('theme');
-                  if (theme) {
-                    document.documentElement.setAttribute('data-theme', theme);
-                  }
-                } catch (e) {}
+                  var theme = localStorage.getItem('theme') || 'light';
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch (e) {
+                  document.documentElement.setAttribute('data-theme', 'light');
+                }
               })();
             `,
           }}
         />
       </head>
       <body className="antialiased" suppressHydrationWarning={true}>
+        <LoadingBar />
         <LenisProvider>
           {children}
         </LenisProvider>
