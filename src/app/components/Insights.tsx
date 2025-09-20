@@ -13,7 +13,7 @@ export default function Insights() {
     const labelRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const descRef = useRef<HTMLParagraphElement>(null);
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const buttonRef = useRef<HTMLAnchorElement>(null);
 
     useEffect(() => {
         const insights = insightsRef.current;
