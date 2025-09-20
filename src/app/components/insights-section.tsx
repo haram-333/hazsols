@@ -160,9 +160,6 @@ export default function InsightsSection() {
                 The principles that drive our excellence and innovation
               </h2>
               <p className="insights-subtitle">Building Tomorrow, Today</p>
-              <button className="insights-cta">
-                Learn More
-              </button>
             </div>
           </div>
 

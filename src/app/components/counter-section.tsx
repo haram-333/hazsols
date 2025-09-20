@@ -99,9 +99,9 @@ export default function CounterSection() {
               <p className="counter-description">
                 Hazsols brings an unwavering commitment to excellence, backed by a global presence.
               </p>
-              <button className="counter-cta">
-                Get in Touch
-              </button>
+              <a href="/contact" className="counter-cta">
+                GET IN TOUCH
+              </a>
             </div>
           </div>
 

@@ -1,26 +1,56 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
+  const [isClient, setIsClient] = useState(false);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
+    let lenis: Lenis | null = null;
+    let rafId: number | null = null;
+
+    try {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+
+      function raf(time: number) {
+        if (lenis) {
+          lenis.raf(time);
+          rafId = requestAnimationFrame(raf);
+        }
+      }
+
+      rafId = requestAnimationFrame(raf);
+    } catch (error) {
+      console.warn('Lenis initialization failed:', error);
     }
 
-    requestAnimationFrame(raf);
-
     return () => {
-      lenis.destroy();
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      if (lenis) {
+        try {
+          lenis.destroy();
+        } catch (error) {
+          console.warn('Lenis cleanup failed:', error);
+        }
+      }
     };
-  }, []);
+  }, [isClient]);
+
+  if (!isClient) {
+    return <>{children}</>;
+  }
 
   return <>{children}</>;
 }

@@ -21,7 +21,7 @@ export default function ContactForm() {
   const services = [
     'Web Development',
     'Mobile App Development',
-    'AI & Machine Learning',
+    'Gen AI',
     'E-commerce Solutions',
     'WordPress Development',
     'Shopify Development',
@@ -258,7 +258,6 @@ export default function ContactForm() {
             <p className="sidebar-description">
               As a dynamic startup, we bring fresh perspectives, cutting-edge technology, and personalized attention to every project.
             </p>
-            <button className="sidebar-button">Our Story</button>
           </div>
         </div>
       </div>

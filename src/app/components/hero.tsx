@@ -1,5 +1,4 @@
 "use client";
-import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -29,9 +28,9 @@ export default function Hero() {
             through technology
           </p>
           
-          <Link href="/contact" className="hero-cta">
+          <a href="/contact" className="hero-cta">
             Get in Touch
-          </Link>
+          </a>
         </div>
       </div>
     </section>

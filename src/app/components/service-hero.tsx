@@ -1,6 +1,5 @@
 "use client";
 import Image from 'next/image';
-import Link from 'next/link';
 
 interface ServiceHeroProps {
     serviceType: 'web' | 'app' | 'ai' | 'custom-software';
@@ -74,9 +73,9 @@ export default function ServiceHero({
                     <div className="glass-content">
                         <div className="service-category">{category || config.category}</div>
                         <h1 className="service-title">{title || config.title}</h1>
-                        <Link href="/contact" className="cta-button">
+                        <a href="/contact" className="cta-button">
                             {buttonText || config.buttonText}
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -158,7 +158,7 @@ export default function ServiceTechnologies({ serviceType }: ServiceTechnologies
   }
 
   return (
-    <section className="service-technologies">
+    <section id="technologies" className="service-technologies">
       <div className="technologies-container">
         {/* Background blurry circle */}
         <div className="technologies-bg-circle"></div>

@@ -108,7 +108,7 @@ export default function Insights() {
                 <div className="insights-label" ref={labelRef}>INSIGHTS</div>
                 <h1 className="insights-title" ref={titleRef}>Data-driven solutions for modern businesses.</h1>
                 <p className="insights-description" ref={descRef}>Transform your operations with cutting-edge technology and strategic insights.</p>
-                <button className="insights-cta" ref={buttonRef}>Learn More</button>
+                <a href="/contact" className="insights-cta" ref={buttonRef}>GET IN TOUCH</a>
             </div>
         </div>
     );
