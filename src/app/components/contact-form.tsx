@@ -172,9 +172,9 @@ export default function ContactForm() {
         console.error('Email sending failed:', error);
         console.error('Error details:', {
           message: error instanceof Error ? error.message : 'Unknown error',
-          status: (error as any)?.status,
-          text: (error as any)?.text,
-          response: (error as any)?.response
+          status: (error as { status?: unknown })?.status,
+          text: (error as { text?: unknown })?.text,
+          response: (error as { response?: unknown })?.response
         });
         setSubmitStatus('error');
       } finally {
