@@ -362,7 +362,7 @@ export default function ContactForm() {
             {/* Success/Error Messages */}
             {submitStatus === 'success' && (
               <div className="form-message success">
-                ✅ Thank you! Your message has been sent successfully. We'll get back to you soon.
+                ✅ Thank you! Your message has been sent successfully. We&apos;ll get back to you soon.
               </div>
             )}
             
