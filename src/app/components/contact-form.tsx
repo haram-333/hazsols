@@ -171,10 +171,10 @@ export default function ContactForm() {
       } catch (error) {
         console.error('Email sending failed:', error);
         console.error('Error details:', {
-          message: error.message,
-          status: error.status,
-          text: error.text,
-          response: error.response
+          message: error instanceof Error ? error.message : 'Unknown error',
+          status: (error as any)?.status,
+          text: (error as any)?.text,
+          response: (error as any)?.response
         });
         setSubmitStatus('error');
       } finally {
