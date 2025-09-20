@@ -38,7 +38,33 @@ export default function Footer() {
               <h3 className="section-title">Get in Touch</h3>
               <div className="contact-info">
                 <p className="contact-email">
-                  <a href="mailto:aliramzan@hazsols.com?subject=Inquiry from Website" className="contact-link">aliramzan@hazsols.com</a>
+                  <a 
+                    href="mailto:aliramzan@hazsols.com?subject=Inquiry from Website" 
+                    className="contact-link"
+                    onClick={(e) => {
+                      // Detect if it's mobile
+                      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                      
+                      if (isMobile) {
+                        // On mobile, try mailto first (opens Gmail app)
+                        // If that fails, fallback to Gmail web
+                        e.preventDefault();
+                        window.location.href = 'mailto:aliramzan@hazsols.com?subject=Inquiry from Website';
+                        
+                        // Fallback after 2 seconds if mailto doesn't work
+                        setTimeout(() => {
+                          window.open('https://mail.google.com/mail/?view=cm&fs=1&to=aliramzan@hazsols.com&su=Inquiry from Website', '_blank');
+                        }, 2000);
+                      } else {
+                        // On desktop, open Gmail web directly
+                        e.preventDefault();
+                        window.open('https://mail.google.com/mail/?view=cm&fs=1&to=aliramzan@hazsols.com&su=Inquiry from Website', '_blank');
+                      }
+                    }}
+                    title="Opens Gmail app on mobile, Gmail web on desktop"
+                  >
+                    aliramzan@hazsols.com
+                  </a>
                 </p>
                 <p className="contact-phone">
                   <a href="tel:+923094471969" className="contact-link">+92 309 447 1969</a>
