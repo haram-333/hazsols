@@ -20,7 +20,7 @@ export default function AboutPage() {
     const labelRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const descRef = useRef<HTMLParagraphElement>(null);
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const buttonRef = useRef<HTMLAnchorElement>(null);
 
     useEffect(() => {
         // Set theme immediately to prevent flicker
