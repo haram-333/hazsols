@@ -292,6 +292,7 @@ export default function Header() {
                                     <a href="/services/web#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>React</a>
                                     <a href="/services/web#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Next.js</a>
                                     <a href="/services/web#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>WordPress</a>
+                                    <a href="/services/web#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Shopify</a>
                                     <a href="/services/web#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Vue.js</a>
                                     <a href="/services/web#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Angular</a>
                                     <a href="/services/web#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Svelte</a>
@@ -302,9 +303,7 @@ export default function Header() {
                                 <div className="mobile-dropdown-sublinks">
                                     <a href="/services/app#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Flutter</a>
                                     <a href="/services/app#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>React Native</a>
-                                    <a href="/services/app#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Native Android</a>
-                                    <a href="/services/app#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Native iOS</a>
-                                    <a href="/services/app#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Xamarin</a>
+                                    <a href="/services/app#technologies" className="mobile-dropdown-sublink" onClick={toggleMobileMenu}>Native Android (Java/Kotlin)</a>
                                 </div>
                             </div>
                             <div className="mobile-dropdown-section">
