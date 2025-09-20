@@ -19,6 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={josefinSans.variable} suppressHydrationWarning={true}>
       <head>
+        <link rel="icon" href="/logo.png" type="image/png" />
+        <link rel="shortcut icon" href="/logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        <meta name="theme-color" content="#14b8a6" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
