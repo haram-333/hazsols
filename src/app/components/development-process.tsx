@@ -161,7 +161,7 @@ export default function DevelopmentProcess({ serviceType }: DevelopmentProcessPr
         <h2 className="process-title">{config.title}</h2>
         
         <div className="process-steps">
-          {config.steps.map((step, index) => (
+          {config.steps.map((step) => (
             <div key={step.number} className="process-step">
               <div className="step-number">{step.number}</div>
               <div className="step-content">

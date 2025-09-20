@@ -38,10 +38,10 @@ export default function Footer() {
               <h3 className="section-title">Get in Touch</h3>
               <div className="contact-info">
                 <p className="contact-email">
-                  <a href="mailto:aliramzan@hazsols.com">aliramzan@hazsols.com</a>
+                  <a href="mailto:aliramzan@hazsols.com?subject=Inquiry from Website" className="contact-link">aliramzan@hazsols.com</a>
                 </p>
                 <p className="contact-phone">
-                  <a href="tel:+923094471969">+92 309 447 1969</a>
+                  <a href="tel:+923094471969" className="contact-link">+92 309 447 1969</a>
                 </p>
                 <p className="contact-address">Lahore, Pakistan</p>
               </div>

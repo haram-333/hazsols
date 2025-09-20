@@ -136,7 +136,7 @@ export default function PrivacyPage() {
                         </section>
 
                         <section className="privacy-section">
-                            <h2 className="section-title">9. Children's Privacy</h2>
+                            <h2 className="section-title">9. Children&apos;s Privacy</h2>
                             <p className="section-text">
                                 Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
                             </p>
@@ -145,7 +145,7 @@ export default function PrivacyPage() {
                         <section className="privacy-section">
                             <h2 className="section-title">10. Changes to This Privacy Policy</h2>
                             <p className="section-text">
-                                We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page and updating the "Last updated" date.
+                                We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page and updating the &quot;Last updated&quot; date.
                             </p>
                         </section>
 

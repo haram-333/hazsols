@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 interface TechStackProps {
   serviceType: 'web' | 'app' | 'ai' | 'custom-software';
@@ -162,9 +163,11 @@ export default function TechStack({ serviceType }: TechStackProps) {
                 {failedImages.has(index) ? (
                   getFallbackLogo(tech.name)
                 ) : (
-                  <img 
+                  <Image 
                     src={tech.logo} 
                     alt={tech.name}
+                    width={40}
+                    height={40}
                     className="tech-logo-img"
                     onError={() => handleImageError(index)}
                   />

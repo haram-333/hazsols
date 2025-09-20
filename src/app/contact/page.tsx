@@ -36,15 +36,15 @@ export default function ContactPage() {
             <main className="contact-page">
                 <div className="contact-header">
                     <h1 className="contact-title">Get In Touch</h1>
-                    <p className="contact-subtitle">Ready to start your next project? Let's discuss how we can help you achieve your goals.</p>
+                    <p className="contact-subtitle">Ready to start your next project? Let&apos;s discuss how we can help you achieve your goals.</p>
                 </div>
                 
                 <div className="contact-content">
                     <div className="contact-main-card">
                         <div className="contact-left">
-                            <h2 className="info-title">Let's Talk Business</h2>
+                            <h2 className="info-title">Let&apos;s Talk Business</h2>
                             <p className="info-description">
-                                We're here to help you bring your ideas to life. Whether you need a website, mobile app, 
+                                We&apos;re here to help you bring your ideas to life. Whether you need a website, mobile app, 
                                 AI solution, or custom software, our team is ready to deliver exceptional results.
                             </p>
                             

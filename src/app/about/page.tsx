@@ -168,10 +168,12 @@ export default function AboutPage() {
                 </section>
                 <div className="insights" ref={insightsRef}>
                     <div className="img-section" ref={imgRef}>
-                        <img
+                        <Image
                             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&h=1080&fit=crop&crop=center"
                             alt="Our Team Philosophy"
-                        ></img>
+                            width={1920}
+                            height={1080}
+                        />
                     </div>
                     <div className="insights-text" ref={textRef}>
                         <div className="insights-label" ref={labelRef}>OUR PHILOSOPHY</div>
@@ -258,7 +260,7 @@ export default function AboutPage() {
                                     </svg>
                                 </div>
                                 <h3 className="value-card-title">Overdeliver on the Promise</h3>
-                                <p className="value-card-description">Exceeding expectations is our standard, going beyond what's assured.</p>
+                                <p className="value-card-description">Exceeding expectations is our standard, going beyond what&apos;s assured.</p>
                             </div>
                             <div className="value-card">
                                 <div className="value-icon">
