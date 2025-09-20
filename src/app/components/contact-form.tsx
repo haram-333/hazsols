@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,8 @@ export default function ContactForm() {
   });
 
   const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const services = [
     'Web Development',
@@ -53,7 +56,7 @@ export default function ContactForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
@@ -72,8 +75,111 @@ export default function ContactForm() {
     setErrors(newErrors);
     
     if (Object.keys(newErrors).length === 0) {
-      // Handle form submission
-      console.log('Form submitted:', formData);
+      setIsSubmitting(true);
+      setSubmitStatus('idle');
+      
+      try {
+        // Prepare email template parameters for both emails
+        const templateParams = {
+          from_name: `${formData.firstName} ${formData.lastName}`,
+          from_email: formData.email,
+          phone: formData.phone,
+          company_name: formData.companyName,
+          company_domain: formData.companyDomain || 'Not provided',
+          budget: formData.budget,
+          region: formData.region,
+          services: formData.services.join(', '),
+          project_details: formData.projectDetails,
+          to_email: 'hazsolssolution@gmail.com'
+        };
+
+        // Initialize EmailJS
+        emailjs.init('96tNctYJk2XNrx0h0');
+        
+        // Test with just one email first
+        console.log('Testing EmailJS connection...');
+        console.log('Service ID: service_r6zkxtd');
+        console.log('Template ID: template_doitlxq');
+        console.log('API Key: 96tNctYJk2XNrx0h0');
+        
+        // Try sending just the form data email first
+        console.log('Sending form data email...');
+        console.log('Template params:', templateParams);
+        
+        try {
+          const formDataResult = await emailjs.send(
+            'service_r6zkxtd',
+            'template_doitlxq',
+            templateParams
+          );
+          console.log('Form data email SUCCESS:', formDataResult);
+        } catch (formError) {
+          console.error('Form data email FAILED:', formError);
+          throw formError;
+        }
+        
+        // Send confirmation email to user
+        console.log('Sending confirmation email to user...');
+        console.log('User email:', formData.email);
+        console.log('Confirmation template params:', {
+          user_name: `${formData.firstName} ${formData.lastName}`,
+          user_email: formData.email,
+          to_email: formData.email,
+          company_name: 'HazSols',
+          company_email: 'hazsolssolution@gmail.com',
+          website_link: 'https://hazsols.com'
+        });
+        
+        try {
+          const confirmationResult = await emailjs.send(
+            'service_r6zkxtd',
+            'template_ywm0y4p',
+            {
+              name: `${formData.firstName} ${formData.lastName}`,
+              email: formData.email,
+              user_name: `${formData.firstName} ${formData.lastName}`,
+              user_email: formData.email,
+              to_email: formData.email,
+              company_name: 'HazSols',
+              company_email: 'hazsolssolution@gmail.com',
+              website_link: 'https://hazsols.com'
+            }
+          );
+          console.log('Confirmation email SUCCESS:', confirmationResult);
+        } catch (confirmError) {
+          console.error('Confirmation email FAILED:', confirmError);
+          console.error('This means the user will NOT receive a confirmation email');
+          // Still continue - form data email is more important
+        }
+
+        setSubmitStatus('success');
+        
+        // Reset form after successful submission
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          budget: '',
+          companyName: '',
+          companyDomain: '',
+          region: '',
+          services: [],
+          projectDetails: ''
+        });
+        
+      } catch (error) {
+        console.error('Email sending failed:', error);
+        console.error('Error details:', {
+          message: error.message,
+          status: error.status,
+          text: error.text,
+          response: error.response
+        });
+        setSubmitStatus('error');
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -245,9 +351,26 @@ export default function ContactForm() {
             </div>
 
 
-            <button type="submit" className="submit-button">
-              Submit
+            <button 
+              type="submit" 
+              className="submit-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Sending...' : 'Submit'}
             </button>
+            
+            {/* Success/Error Messages */}
+            {submitStatus === 'success' && (
+              <div className="form-message success">
+                ✅ Thank you! Your message has been sent successfully. We'll get back to you soon.
+              </div>
+            )}
+            
+            {submitStatus === 'error' && (
+              <div className="form-message error">
+                ❌ Sorry, there was an error sending your message. Please try again or contact us directly.
+              </div>
+            )}
           </form>
         </div>
 
