@@ -1,0 +1,428 @@
+{
+  "ai": {
+    "development-cover-lg": {
+      "jpg": "/images/optimized/ai-development-cover-lg.jpg",
+      "webp": "/images/optimized/ai-development-cover-lg.webp"
+    },
+    "development-cover-md": {
+      "jpg": "/images/optimized/ai-development-cover-md.jpg",
+      "webp": "/images/optimized/ai-development-cover-md.webp"
+    },
+    "development-cover-sm": {
+      "jpg": "/images/optimized/ai-development-cover-sm.jpg",
+      "webp": "/images/optimized/ai-development-cover-sm.webp"
+    },
+    "development-cover-xl": {
+      "jpg": "/images/optimized/ai-development-cover-xl.jpg",
+      "webp": "/images/optimized/ai-development-cover-xl.webp"
+    }
+  },
+  "Android": {
+    "lg": {
+      "jpg": "/images/optimized/Android-lg.jpg",
+      "webp": "/images/optimized/Android-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/Android-md.jpg",
+      "webp": "/images/optimized/Android-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/Android-sm.jpg",
+      "webp": "/images/optimized/Android-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/Android-xl.jpg",
+      "webp": "/images/optimized/Android-xl.webp"
+    }
+  },
+  "Angular": {
+    "lg": {
+      "jpg": "/images/optimized/Angular-lg.jpg",
+      "webp": "/images/optimized/Angular-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/Angular-md.jpg",
+      "webp": "/images/optimized/Angular-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/Angular-sm.jpg",
+      "webp": "/images/optimized/Angular-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/Angular-xl.jpg",
+      "webp": "/images/optimized/Angular-xl.webp"
+    }
+  },
+  "Bootstrap": {
+    "lg": {
+      "jpg": "/images/optimized/Bootstrap-lg.jpg",
+      "webp": "/images/optimized/Bootstrap-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/Bootstrap-md.jpg",
+      "webp": "/images/optimized/Bootstrap-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/Bootstrap-sm.jpg",
+      "webp": "/images/optimized/Bootstrap-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/Bootstrap-xl.jpg",
+      "webp": "/images/optimized/Bootstrap-xl.webp"
+    }
+  },
+  "custom": {
+    "software-development-cover-lg": {
+      "jpg": "/images/optimized/custom-software-development-cover-lg.jpg",
+      "webp": "/images/optimized/custom-software-development-cover-lg.webp"
+    },
+    "software-development-cover-md": {
+      "jpg": "/images/optimized/custom-software-development-cover-md.jpg",
+      "webp": "/images/optimized/custom-software-development-cover-md.webp"
+    },
+    "software-development-cover-sm": {
+      "jpg": "/images/optimized/custom-software-development-cover-sm.jpg",
+      "webp": "/images/optimized/custom-software-development-cover-sm.webp"
+    },
+    "software-development-cover-xl": {
+      "jpg": "/images/optimized/custom-software-development-cover-xl.jpg",
+      "webp": "/images/optimized/custom-software-development-cover-xl.webp"
+    }
+  },
+  "ecommerce": {
+    "lg": {
+      "jpg": "/images/optimized/ecommerce-lg.jpg",
+      "webp": "/images/optimized/ecommerce-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/ecommerce-md.jpg",
+      "webp": "/images/optimized/ecommerce-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/ecommerce-sm.jpg",
+      "webp": "/images/optimized/ecommerce-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/ecommerce-xl.jpg",
+      "webp": "/images/optimized/ecommerce-xl.webp"
+    }
+  },
+  "Flutter": {
+    "lg": {
+      "jpg": "/images/optimized/Flutter-lg.jpg",
+      "webp": "/images/optimized/Flutter-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/Flutter-md.jpg",
+      "webp": "/images/optimized/Flutter-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/Flutter-sm.jpg",
+      "webp": "/images/optimized/Flutter-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/Flutter-xl.jpg",
+      "webp": "/images/optimized/Flutter-xl.webp"
+    }
+  },
+  "generative": {
+    "ai-lg": {
+      "jpg": "/images/optimized/generative-ai-lg.jpg",
+      "webp": "/images/optimized/generative-ai-lg.webp"
+    },
+    "ai-md": {
+      "jpg": "/images/optimized/generative-ai-md.jpg",
+      "webp": "/images/optimized/generative-ai-md.webp"
+    },
+    "ai-sm": {
+      "jpg": "/images/optimized/generative-ai-sm.jpg",
+      "webp": "/images/optimized/generative-ai-sm.webp"
+    },
+    "ai-xl": {
+      "jpg": "/images/optimized/generative-ai-xl.jpg",
+      "webp": "/images/optimized/generative-ai-xl.webp"
+    }
+  },
+  "Java": {
+    "lg": {
+      "jpg": "/images/optimized/Java-lg.jpg",
+      "webp": "/images/optimized/Java-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/Java-md.jpg",
+      "webp": "/images/optimized/Java-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/Java-sm.jpg",
+      "webp": "/images/optimized/Java-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/Java-xl.jpg",
+      "webp": "/images/optimized/Java-xl.webp"
+    }
+  },
+  "JavaScript": {
+    "lg": {
+      "jpg": "/images/optimized/JavaScript-lg.jpg",
+      "webp": "/images/optimized/JavaScript-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/JavaScript-md.jpg",
+      "webp": "/images/optimized/JavaScript-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/JavaScript-sm.jpg",
+      "webp": "/images/optimized/JavaScript-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/JavaScript-xl.jpg",
+      "webp": "/images/optimized/JavaScript-xl.webp"
+    }
+  },
+  "Kotlin": {
+    "lg": {
+      "jpg": "/images/optimized/Kotlin-lg.jpg",
+      "webp": "/images/optimized/Kotlin-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/Kotlin-md.jpg",
+      "webp": "/images/optimized/Kotlin-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/Kotlin-sm.jpg",
+      "webp": "/images/optimized/Kotlin-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/Kotlin-xl.jpg",
+      "webp": "/images/optimized/Kotlin-xl.webp"
+    }
+  },
+  "mobile": {
+    "app-development-lg": {
+      "jpg": "/images/optimized/mobile-app-development-lg.jpg",
+      "webp": "/images/optimized/mobile-app-development-lg.webp"
+    },
+    "app-development-md": {
+      "jpg": "/images/optimized/mobile-app-development-md.jpg",
+      "webp": "/images/optimized/mobile-app-development-md.webp"
+    },
+    "app-development-sm": {
+      "jpg": "/images/optimized/mobile-app-development-sm.jpg",
+      "webp": "/images/optimized/mobile-app-development-sm.webp"
+    },
+    "app-development-xl": {
+      "jpg": "/images/optimized/mobile-app-development-xl.jpg",
+      "webp": "/images/optimized/mobile-app-development-xl.webp"
+    },
+    "development-cover-lg": {
+      "jpg": "/images/optimized/mobile-development-cover-lg.jpg",
+      "webp": "/images/optimized/mobile-development-cover-lg.webp"
+    },
+    "development-cover-md": {
+      "jpg": "/images/optimized/mobile-development-cover-md.jpg",
+      "webp": "/images/optimized/mobile-development-cover-md.webp"
+    },
+    "development-cover-sm": {
+      "jpg": "/images/optimized/mobile-development-cover-sm.jpg",
+      "webp": "/images/optimized/mobile-development-cover-sm.webp"
+    },
+    "development-cover-xl": {
+      "jpg": "/images/optimized/mobile-development-cover-xl.jpg",
+      "webp": "/images/optimized/mobile-development-cover-xl.webp"
+    }
+  },
+  "Next.js": {
+    "original": {
+      "js-lg": "/images/optimized/Next.js-lg.webp",
+      "js-md": "/images/optimized/Next.js-md.webp",
+      "js-sm": "/images/optimized/Next.js-sm.webp",
+      "js-xl": "/images/optimized/Next.js-xl.webp"
+    }
+  },
+  "random": {
+    "lg": {
+      "jpg": "/images/optimized/random-lg.jpg",
+      "webp": "/images/optimized/random-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/random-md.jpg",
+      "webp": "/images/optimized/random-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/random-sm.jpg",
+      "webp": "/images/optimized/random-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/random-xl.jpg",
+      "webp": "/images/optimized/random-xl.webp"
+    }
+  },
+  "React": {
+    "lg": {
+      "jpg": "/images/optimized/React-lg.jpg",
+      "webp": "/images/optimized/React-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/React-md.jpg",
+      "webp": "/images/optimized/React-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/React-sm.jpg",
+      "webp": "/images/optimized/React-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/React-xl.jpg",
+      "webp": "/images/optimized/React-xl.webp"
+    }
+  },
+  "seo": {
+    "lg": {
+      "jpg": "/images/optimized/seo-lg.jpg",
+      "webp": "/images/optimized/seo-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/seo-md.jpg",
+      "webp": "/images/optimized/seo-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/seo-sm.jpg",
+      "webp": "/images/optimized/seo-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/seo-xl.jpg",
+      "webp": "/images/optimized/seo-xl.webp"
+    }
+  },
+  "shopify": {
+    "lg": {
+      "jpg": "/images/optimized/shopify-lg.jpg",
+      "webp": "/images/optimized/shopify-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/shopify-md.jpg",
+      "webp": "/images/optimized/shopify-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/shopify-sm.jpg",
+      "webp": "/images/optimized/shopify-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/shopify-xl.jpg",
+      "webp": "/images/optimized/shopify-xl.webp"
+    }
+  },
+  "Svelte": {
+    "lg": {
+      "jpg": "/images/optimized/Svelte-lg.jpg",
+      "webp": "/images/optimized/Svelte-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/Svelte-md.jpg",
+      "webp": "/images/optimized/Svelte-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/Svelte-sm.jpg",
+      "webp": "/images/optimized/Svelte-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/Svelte-xl.jpg",
+      "webp": "/images/optimized/Svelte-xl.webp"
+    }
+  },
+  "Tailwind CSS": {
+    "lg": {
+      "jpg": "/images/optimized/Tailwind CSS-lg.jpg",
+      "webp": "/images/optimized/Tailwind CSS-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/Tailwind CSS-md.jpg",
+      "webp": "/images/optimized/Tailwind CSS-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/Tailwind CSS-sm.jpg",
+      "webp": "/images/optimized/Tailwind CSS-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/Tailwind CSS-xl.jpg",
+      "webp": "/images/optimized/Tailwind CSS-xl.webp"
+    }
+  },
+  "TypeScript": {
+    "lg": {
+      "jpg": "/images/optimized/TypeScript-lg.jpg",
+      "webp": "/images/optimized/TypeScript-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/TypeScript-md.jpg",
+      "webp": "/images/optimized/TypeScript-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/TypeScript-sm.jpg",
+      "webp": "/images/optimized/TypeScript-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/TypeScript-xl.jpg",
+      "webp": "/images/optimized/TypeScript-xl.webp"
+    }
+  },
+  "Vue.js": {
+    "original": {
+      "js-lg": "/images/optimized/Vue.js-lg.webp",
+      "js-md": "/images/optimized/Vue.js-md.webp",
+      "js-sm": "/images/optimized/Vue.js-sm.webp",
+      "js-xl": "/images/optimized/Vue.js-xl.webp"
+    }
+  },
+  "web": {
+    "development-cover-lg": {
+      "jpg": "/images/optimized/web-development-cover-lg.jpg",
+      "webp": "/images/optimized/web-development-cover-lg.webp"
+    },
+    "development-cover-md": {
+      "jpg": "/images/optimized/web-development-cover-md.jpg",
+      "webp": "/images/optimized/web-development-cover-md.webp"
+    },
+    "development-cover-sm": {
+      "jpg": "/images/optimized/web-development-cover-sm.jpg",
+      "webp": "/images/optimized/web-development-cover-sm.webp"
+    },
+    "development-cover-xl": {
+      "jpg": "/images/optimized/web-development-cover-xl.jpg",
+      "webp": "/images/optimized/web-development-cover-xl.webp"
+    },
+    "development-lg": {
+      "jpg": "/images/optimized/web-development-lg.jpg",
+      "webp": "/images/optimized/web-development-lg.webp"
+    },
+    "development-md": {
+      "jpg": "/images/optimized/web-development-md.jpg",
+      "webp": "/images/optimized/web-development-md.webp"
+    },
+    "development-sm": {
+      "jpg": "/images/optimized/web-development-sm.jpg",
+      "webp": "/images/optimized/web-development-sm.webp"
+    },
+    "development-xl": {
+      "jpg": "/images/optimized/web-development-xl.jpg",
+      "webp": "/images/optimized/web-development-xl.webp"
+    }
+  },
+  "wordpress": {
+    "lg": {
+      "jpg": "/images/optimized/wordpress-lg.jpg",
+      "webp": "/images/optimized/wordpress-lg.webp"
+    },
+    "md": {
+      "jpg": "/images/optimized/wordpress-md.jpg",
+      "webp": "/images/optimized/wordpress-md.webp"
+    },
+    "sm": {
+      "jpg": "/images/optimized/wordpress-sm.jpg",
+      "webp": "/images/optimized/wordpress-sm.webp"
+    },
+    "xl": {
+      "jpg": "/images/optimized/wordpress-xl.jpg",
+      "webp": "/images/optimized/wordpress-xl.webp"
+    }
+  }
+}

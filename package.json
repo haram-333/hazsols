@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "optimize": "node scripts/optimize-media.js",
+    "compress-videos": "scripts\\compress-videos.bat",
+    "analyze": "npm run build && npx @next/bundle-analyzer"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -28,6 +31,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
+    "sharp": "^0.34.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

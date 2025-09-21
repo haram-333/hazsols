@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
@@ -12,9 +12,25 @@ export default function VideoScrollSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+
+    // Intersection Observer for lazy loading
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVideoVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
     // Set text hidden initially
     gsap.set(textRef.current, { opacity: 0 });
@@ -52,22 +68,34 @@ export default function VideoScrollSection() {
 
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      observer.disconnect();
+      ctx.revert();
+    };
   }, []);
+
+  const handleVideoLoad = () => {
+    setIsVideoLoaded(true);
+  };
 
   return (
     <div ref={sectionRef} className="video-scroll-section">
       <div className="video-scroll-container">
-        <video
-          ref={videoRef}
-          className="video-scroll-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="/videos/meeting.mp4" type="video/mp4" />
-        </video>
+        {isVideoVisible && (
+          <video
+            ref={videoRef}
+            className="video-scroll-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onLoadedData={handleVideoLoad}
+            style={{ opacity: isVideoLoaded ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}
+          >
+            <source src="/videos/meeting.mp4" type="video/mp4" />
+          </video>
+        )}
 
         <div ref={textRef} className="video-scroll-text">
           <div className="video-scroll-content">
