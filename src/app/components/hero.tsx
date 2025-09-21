@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [isVideoVisible, setIsVideoVisible] = useState(true);
   const [useFallback, setUseFallback] = useState(false);
 
   useEffect(() => {
@@ -25,8 +24,7 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-video">
-        {isVideoVisible && (
-          <video 
+        <video 
             ref={videoRef}
             autoPlay 
             muted 
@@ -35,8 +33,6 @@ export default function Hero() {
             preload="auto"
             onLoadedData={handleVideoLoad}
             onError={handleVideoError}
-            onLoadStart={() => console.log('Video loading started')}
-            onCanPlay={() => console.log('Video can play')}
             className="hero-video-bg"
             style={{ 
               opacity: isVideoLoaded ? 1 : 0.5, 
@@ -49,7 +45,6 @@ export default function Hero() {
             <source src="/videos/hero.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-        )}
         
         {/* Fallback gradient if video fails to load */}
         {useFallback && (
