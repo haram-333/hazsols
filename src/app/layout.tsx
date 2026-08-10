@@ -1,13 +1,17 @@
 import "./globals.css";
 import LenisProvider from "./components/lenis-provider";
-import LoadingBar from "./components/loading-bar";
-import { Josefin_Sans } from 'next/font/google';
+import PageLoader from "./components/page-loader";
+import { Inter, Outfit } from 'next/font/google';
 import { Suspense } from 'react';
 
-const josefinSans = Josefin_Sans({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700'],
-  variable: '--font-josefin-sans',
+  variable: '--font-inter',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit',
 });
 
 
@@ -17,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={josefinSans.variable} suppressHydrationWarning={true}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning={true}>
       <head>
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="shortcut icon" href="/logo.png" type="image/png" />
@@ -28,10 +32,10 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var theme = localStorage.getItem('theme') || 'light';
-                  document.documentElement.setAttribute('data-theme', theme);
+                  localStorage.removeItem('theme'); // Force clear any cached 'light' theme
+                  document.documentElement.setAttribute('data-theme', 'dark');
                 } catch (e) {
-                  document.documentElement.setAttribute('data-theme', 'light');
+                  document.documentElement.setAttribute('data-theme', 'dark');
                 }
               })();
             `,
@@ -39,12 +43,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased" suppressHydrationWarning={true}>
-        <Suspense fallback={null}>
-          <LoadingBar />
-        </Suspense>
-        <LenisProvider>
-          {children}
-        </LenisProvider>
+        <PageLoader>
+          <LenisProvider>
+            {children}
+          </LenisProvider>
+        </PageLoader>
       </body>
     </html>
   );
