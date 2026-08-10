@@ -122,7 +122,7 @@ export default function GooeyCanvas({ imageSrc }: GooeyCanvasProps) {
         const clock = new THREE.Clock();
 
         let targetHover = 0;
-        let targetMouse = new THREE.Vector2(0.5, 0.5);
+        const targetMouse = new THREE.Vector2(0.5, 0.5);
 
         const onMouseMove = (e: MouseEvent) => {
             const rect = container.getBoundingClientRect();

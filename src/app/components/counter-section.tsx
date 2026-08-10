@@ -146,7 +146,7 @@ export default function CounterSection() {
         if (ctx) ctx.revert();
       };
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [isVisible]);
 
   const startCounters = () => {
