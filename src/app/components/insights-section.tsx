@@ -6,8 +6,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import dynamic from 'next/dynamic';
 import React from 'react';
 
-// Import removed due to 2D migration
-import React from 'react';
+// Dynamically import ThreeCanvas to prevent SSR window errors
+const ThreeCanvas = dynamic(() => import('./three-canvas'), {
+  ssr: false,
+});
 
 // Register ScrollTrigger plugin
 if (typeof window !== 'undefined') {
@@ -213,30 +215,9 @@ export default function InsightsSection() {
   return (
     <div ref={sectionRef} className="relative w-full bg-[#050505] min-h-screen py-24 lg:py-32 overflow-hidden border-t border-white/5">
       
-      {/* Performant 2D CSS Ambient Background (Replaces WebGL) */}
-      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-        <style dangerouslySetInnerHTML={{ __html: `
-          @keyframes float1 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(5%, 5%) scale(1.1); }
-            100% { transform: translate(0, 0) scale(1); }
-          }
-          @keyframes float2 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-5%, -5%) scale(1.2); }
-            100% { transform: translate(0, 0) scale(1); }
-          }
-        `}} />
-        {/* Neon Green Ambient Blob */}
-        <div 
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#c8f04a] rounded-full mix-blend-screen opacity-10 blur-[120px]"
-          style={{ animation: 'float1 10s ease-in-out infinite' }}
-        />
-        {/* Teal Ambient Blob */}
-        <div 
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#14b8a6] rounded-full mix-blend-screen opacity-10 blur-[120px]"
-          style={{ animation: 'float2 12s ease-in-out infinite' }}
-        />
+      {/* 3D Liquid Core Background - Full Width & Height */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <ThreeCanvas />
       </div>
       
       {/* Container */}

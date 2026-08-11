@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import GooeyCanvas from './GooeyCanvas';
 
 export default function Hero() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -33,28 +34,10 @@ export default function Hero() {
 
             {/* MASSIVE TEXT CONTAINER (Isolated mix-blend-screen group) */}
             <div className="relative w-[100vw] left-1/2 -translate-x-1/2 mt-4 md:mt-8 flex-1 flex flex-col justify-center" style={{ mixBlendMode: 'screen', isolation: 'isolate' }}>
-                {/* 1. Performant 2D CSS Mesh Gradient Layer (Replaces WebGL) */}
-                <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-auto bg-[#c8f04a] overflow-hidden">
-                    <style dangerouslySetInnerHTML={{ __html: `
-                        @keyframes cssLiquid {
-                            0% { transform: scale(1) translate(0, 0) rotate(0deg); }
-                            33% { transform: scale(1.1) translate(2%, 2%) rotate(2deg); }
-                            66% { transform: scale(0.95) translate(-2%, 1%) rotate(-1deg); }
-                            100% { transform: scale(1) translate(0, 0) rotate(0deg); }
-                        }
-                        .css-mesh {
-                            background-color: #c8f04a;
-                            background-image: 
-                                radial-gradient(at 0% 0%, #14b8a6 0px, transparent 50%),
-                                radial-gradient(at 100% 0%, #c8f04a 0px, transparent 50%),
-                                radial-gradient(at 100% 100%, #14b8a6 0px, transparent 50%),
-                                radial-gradient(at 0% 100%, #c8f04a 0px, transparent 50%),
-                                radial-gradient(at 50% 50%, #ffffff 0px, transparent 50%);
-                            animation: cssLiquid 15s ease-in-out infinite alternate;
-                            will-change: transform;
-                        }
-                    `}} />
-                    <div className="absolute inset-[-10%] css-mesh opacity-90 blur-xl"></div>
+                
+                {/* 1. Custom WebGL Canvas Layer (Bottom) - Full viewport width */}
+                <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-auto bg-gradient-to-br from-[#c8f04a] to-emerald-600">
+                    <GooeyCanvas imageSrc="/shery_bg_bright.png" />
                 </div>
 
                 {/* 2. Text Mask Layer (Top) - Full viewport width, but content is grid-aligned */}
