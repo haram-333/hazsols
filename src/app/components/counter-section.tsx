@@ -56,7 +56,7 @@ const SplitWords = ({ text }: { text: string }) => {
 const InlineCounter = ({ data, targetLength }: { data: any, targetLength: number }) => {
   return (
     <span className="inline-block align-middle mx-2 md:mx-3">
-      <span className="gsap-reveal-wrapper inline-block overflow-hidden pb-[0.1em] pt-1">
+      <span className="gsap-reveal-wrapper inline-block overflow-hidden pb-[0.1em] pt-1 align-bottom">
         <span className="gsap-reveal inline-block opacity-0 translate-y-[110%]">
           <span className="inline-flex items-baseline justify-center px-4 md:px-5 py-2 bg-[#050505] border border-white/10 rounded-2xl group hover:border-[#c8f04a]/50 hover:bg-[#c8f04a]/5 transition-all duration-300 cursor-default transform hover:scale-105 hover:-translate-y-1 shadow-2xl relative overflow-hidden">
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#c8f04a]/10 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-700 ease-out"></span>
@@ -126,7 +126,11 @@ export default function CounterSection() {
                 opacity: 1,
                 duration: 0.9,
                 stagger: 0.025,
-                ease: "power4.out"
+                ease: "power4.out",
+                onComplete: () => {
+                  const wrappers = sectionRef.current?.querySelectorAll('.gsap-reveal-wrapper');
+                  wrappers?.forEach(w => w.classList.remove('overflow-hidden'));
+                }
               }, 
               "-=0.4"
             );
