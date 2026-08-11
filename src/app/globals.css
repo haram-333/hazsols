@@ -153,15 +153,9 @@ button:hover .kinetic-text-wrapper {
 /* ========================================= */
 /* MAGIC GLOWING BORDER EFFECT */
 /* ========================================= */
-@property --border-angle {
-  syntax: "<angle>";
-  inherits: true;
-  initial-value: 0turn;
-}
-
-@keyframes spin-border {
+@keyframes spin-border-fast {
   to {
-    --border-angle: 1turn;
+    transform: rotate(1turn);
   }
 }
 
@@ -170,19 +164,30 @@ button:hover .kinetic-text-wrapper {
   inset: 0;
   border-radius: inherit;
   padding: 2px; /* Border thickness */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.magic-border::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
   background: conic-gradient(
-    from var(--border-angle),
+    from 0turn,
     transparent 20%,
     #c8f04a 50%,
     transparent 80%
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: spin-border 4s linear infinite;
-  opacity: 1;
-  pointer-events: none;
-  z-index: 10;
+  transform: translate(-50%, -50%) rotate(0turn);
+  animation: spin-border-fast 4s linear infinite;
+  transform-origin: center center;
 }
 
 /* ========================================= */

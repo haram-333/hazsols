@@ -126,11 +126,7 @@ export default function CounterSection() {
                 opacity: 1,
                 duration: 0.9,
                 stagger: 0.025,
-                ease: "power4.out",
-                onComplete: () => {
-                  const wrappers = sectionRef.current?.querySelectorAll('.gsap-reveal-wrapper');
-                  wrappers?.forEach(w => w.classList.remove('overflow-hidden'));
-                }
+                ease: "power4.out"
               }, 
               "-=0.4"
             );
