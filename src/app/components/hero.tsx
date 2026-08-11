@@ -36,7 +36,7 @@ export default function Hero() {
             <div className="relative w-[100vw] left-1/2 -translate-x-1/2 mt-4 md:mt-8 flex-1 flex flex-col justify-center" style={{ mixBlendMode: 'screen', isolation: 'isolate' }}>
                 
                 {/* 1. Custom WebGL Canvas Layer (Bottom) - Full viewport width */}
-                <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-auto">
+                <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-auto bg-gradient-to-br from-[#c8f04a] to-emerald-600">
                     <GooeyCanvas imageSrc="/shery_bg_bright.png" />
                 </div>
 

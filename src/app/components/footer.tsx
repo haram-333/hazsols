@@ -11,7 +11,7 @@ export default function Footer() {
       </div>
 
       {/* DOM Content Layer */}
-      <div className="relative w-full h-full max-w-[1600px] mx-auto px-6 md:px-12 pt-16 pb-8 flex flex-col justify-between pointer-events-none">
+      <div className="relative w-full h-full max-w-[1600px] mx-auto px-6 md:px-12 pt-16 pb-28 md:pb-8 flex flex-col justify-between pointer-events-none">
         
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pointer-events-auto">
@@ -89,7 +89,7 @@ export default function Footer() {
               }
             }
           `}</style>
-          <h1 className="font-outfit font-black text-center leading-[0.85] tracking-tighter text-[13.5vw] sm:text-[11vw] md:text-[7.5vw] w-full uppercase drop-shadow-2xl gradient-stroke-text px-2 md:px-0">
+          <h1 className="font-outfit font-black text-center leading-[0.85] tracking-tighter text-[11.5vw] sm:text-[11vw] md:text-[7.5vw] w-full uppercase drop-shadow-2xl gradient-stroke-text px-2 md:px-0">
             CREATIVE AND<br className="hidden md:block"/><span className="md:hidden"> </span>RELIABLE SOFTWARE<br className="hidden md:block"/><span className="md:hidden"> </span>ENGINEERING STUDIO
           </h1>
         </div>
