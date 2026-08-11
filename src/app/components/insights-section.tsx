@@ -130,13 +130,13 @@ function ModernInsightCard({ card }: { card: InsightCard }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}
-      className="group relative w-full rounded-[24px] bg-[#050505] border border-white/5 p-1 overflow-hidden cursor-pointer h-[320px] shadow-2xl"
+      className="group relative w-full rounded-[24px] bg-[#050505] border border-white/5 p-1 overflow-hidden cursor-pointer h-[260px] md:h-[280px] xl:h-[320px] shadow-2xl"
     >
       {/* Magic Glowing Border Layer */}
       <div className="magic-border" style={{ transition: 'opacity 0.3s' }}></div>
 
       {/* Internal Content Container */}
-      <div className="relative z-10 h-full w-full rounded-[20px] bg-[#0a0a0c] overflow-hidden flex flex-col p-8">
+      <div className="relative z-10 h-full w-full rounded-[20px] bg-[#0a0a0c] overflow-hidden flex flex-col p-5 md:p-6 xl:p-8">
         
         {/* Subtle Dotted Grid Pattern (Only visible on hover spotlight) */}
         <div 
@@ -161,17 +161,17 @@ function ModernInsightCard({ card }: { card: InsightCard }) {
         <div className="relative z-20 flex flex-col h-full">
           {/* Top Section: Icon */}
           <div className="mb-auto">
-            <div className="w-12 h-12 rounded-xl bg-[#c8f04a]/10 border border-[#c8f04a]/20 flex items-center justify-center text-[#c8f04a] mb-6 group-hover:scale-110 group-hover:bg-[#c8f04a]/20 transition-all duration-500 shadow-[0_0_20px_rgba(200,240,74,0.1)]">
+            <div className="w-10 h-10 xl:w-12 xl:h-12 rounded-xl bg-[#c8f04a]/10 border border-[#c8f04a]/20 flex items-center justify-center text-[#c8f04a] mb-4 xl:mb-6 group-hover:scale-110 group-hover:bg-[#c8f04a]/20 transition-all duration-500 shadow-[0_0_20px_rgba(200,240,74,0.1)]">
               {getCategoryIcon(card.category)}
             </div>
           </div>
           
           {/* Bottom Section: Typography */}
           <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-            <h3 className="font-outfit font-bold text-2xl text-white mb-3 group-hover:text-[#c8f04a] transition-colors duration-300 tracking-tight">
+            <h3 className="font-outfit font-bold text-lg md:text-xl xl:text-2xl text-white mb-2 xl:mb-3 group-hover:text-[#c8f04a] transition-colors duration-300 tracking-tight">
               {card.title}
             </h3>
-            <p className="font-inter text-gray-400 text-sm leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+            <p className="font-inter text-gray-400 text-xs xl:text-sm leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity duration-500 line-clamp-3">
               {card.description}
             </p>
           </div>
@@ -225,7 +225,7 @@ export default function InsightsSection() {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-8">
           
           {/* Left Column - Linear-style Stark Typography */}
-          <div ref={leftColumnRef} className="w-full lg:w-5/12 flex flex-col justify-center relative min-h-[50vh] lg:min-h-0 pointer-events-auto">
+          <div ref={leftColumnRef} className="w-full xl:w-5/12 lg:w-1/2 flex flex-col justify-center relative min-h-[50vh] lg:min-h-0 pointer-events-auto">
             
             <div className="relative z-10 mt-auto mb-auto">
               {/* Tech Pill Badge */}
@@ -254,25 +254,25 @@ export default function InsightsSection() {
           </div>
 
           {/* Right Side - 3 Column Stair Layout */}
-          <div className="w-full lg:w-7/12 pointer-events-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 pt-10 lg:pt-32 pb-20">
+          <div className="w-full xl:w-7/12 lg:w-1/2 pointer-events-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 pt-10 lg:pt-32 pb-20">
               
               {/* Column 1 - Moves up fast */}
-              <div ref={column1Ref} className="flex flex-col gap-6 md:gap-8 translate-y-20">
+              <div ref={column1Ref} className="flex flex-col gap-4 md:gap-6 translate-y-20">
                 {column1Cards.map((card) => (
                   <ModernInsightCard key={card.id} card={card} />
                 ))}
               </div>
 
               {/* Column 2 - Moves up slow */}
-              <div ref={column2Ref} className="flex flex-col gap-6 md:gap-8 -translate-y-10">
+              <div ref={column2Ref} className="flex flex-col gap-4 md:gap-6 -translate-y-10">
                 {column2Cards.map((card) => (
                   <ModernInsightCard key={card.id} card={card} />
                 ))}
               </div>
 
               {/* Column 3 - Moves down slightly */}
-              <div ref={column3Ref} className="flex flex-col gap-6 md:gap-8 translate-y-10 hidden sm:flex">
+              <div ref={column3Ref} className="flex-col gap-4 md:gap-6 translate-y-10 hidden xl:flex">
                 {column3Cards.map((card) => (
                   <ModernInsightCard key={card.id} card={card} />
                 ))}
