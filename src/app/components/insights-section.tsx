@@ -211,41 +211,7 @@ export default function InsightsSection() {
   return (
     <div ref={sectionRef} className="relative w-full bg-[#050505] min-h-screen py-24 lg:py-32 overflow-hidden border-t border-white/5">
       
-      {/* Performant 2D CSS Ambient Background (Replaces WebGL) */}
-      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-        <style dangerouslySetInnerHTML={{ __html: `
-          @keyframes float1 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(5%, 5%) scale(1.1); }
-            100% { transform: translate(0, 0) scale(1); }
-          }
-          @keyframes float2 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-5%, -5%) scale(1.2); }
-            100% { transform: translate(0, 0) scale(1); }
-          }
-        `}} />
-        {/* Neon Green Ambient Blob */}
-        <div 
-          className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] pointer-events-none"
-          style={{ 
-            background: 'radial-gradient(circle, rgba(200,240,74,0.06) 0%, transparent 60%)',
-            animation: 'float1 10s ease-in-out infinite',
-            transform: 'translateZ(0)',
-            willChange: 'transform'
-          }}
-        />
-        {/* Teal Ambient Blob */}
-        <div 
-          className="absolute bottom-1/4 right-1/4 w-[40rem] h-[40rem] pointer-events-none"
-          style={{ 
-            background: 'radial-gradient(circle, rgba(20,184,166,0.05) 0%, transparent 60%)',
-            animation: 'float2 12s ease-in-out infinite',
-            transform: 'translateZ(0)',
-            willChange: 'transform'
-          }}
-        />
-      </div>
+      {/* Background Blobs removed for testing */}
       
       {/* Container */}
       <div className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12 pointer-events-none">
