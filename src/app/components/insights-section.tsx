@@ -227,13 +227,23 @@ export default function InsightsSection() {
         `}} />
         {/* Neon Green Ambient Blob */}
         <div 
-          className="absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-[#c8f04a] rounded-full mix-blend-screen opacity-[0.07] blur-[120px]"
-          style={{ animation: 'float1 10s ease-in-out infinite' }}
+          className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] pointer-events-none"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(200,240,74,0.06) 0%, transparent 60%)',
+            animation: 'float1 10s ease-in-out infinite',
+            transform: 'translateZ(0)',
+            willChange: 'transform'
+          }}
         />
         {/* Teal Ambient Blob */}
         <div 
-          className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-[#14b8a6] rounded-full mix-blend-screen opacity-[0.05] blur-[120px]"
-          style={{ animation: 'float2 12s ease-in-out infinite' }}
+          className="absolute bottom-1/4 right-1/4 w-[40rem] h-[40rem] pointer-events-none"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(20,184,166,0.05) 0%, transparent 60%)',
+            animation: 'float2 12s ease-in-out infinite',
+            transform: 'translateZ(0)',
+            willChange: 'transform'
+          }}
         />
       </div>
       

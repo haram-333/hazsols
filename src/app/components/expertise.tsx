@@ -6,7 +6,7 @@ export default function Expertise() {
     return (
         <section className="relative w-full bg-[#050505] text-white py-24 md:py-32 overflow-hidden border-b border-white/5">
             {/* Ambient Background Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#c8f04a] opacity-[0.03] blur-[120px] rounded-full pointer-events-none"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(200,240,74,0.06) 0%, transparent 50%)', transform: 'translateZ(0)', willChange: 'transform' }}></div>
 
             <div className="max-w-[90rem] mx-auto px-6">
                 
