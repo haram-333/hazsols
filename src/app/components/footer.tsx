@@ -62,7 +62,7 @@ export default function Footer() {
                     hazsolssolution@gmail.com
                   </a>
                 </li>
-                <li><a href="tel:+923094471969" className="font-inter text-white/70 hover:text-[#c8f04a] text-sm transition-colors">+92 309 447 1969</a></li>
+                <li><a href="tel:+923094471969" className="font-inter text-white/70 hover:text-[#c8f04a] text-sm transition-colors">+92 343 414 7056</a></li>
               </ul>
             </div>
           </div>
