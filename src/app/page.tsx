@@ -1,27 +1,23 @@
 'use client';
 
-import Header from './components/header';
-import Hero from './components/hero';
-import Marquee from './components/marquee';
+import AxionLandingPage from './components/axion-landing-page';
+import TechShelf3D from './components/tech-shelf-3d';
 import Expertise from './components/expertise';
-import InsightsSection from './components/insights-section';
-import CounterSection from './components/counter-section';
-import Insights from './components/Insights';
+import TestimonialsSection from './components/testimonials-section';
+import FAQSection from './components/faq-section';
 import ContactForm from './components/contact-form';
 import Footer from './components/footer';
 
 export default function Page() {
   return (
-    <>
-      <Header />
-      <Hero />
-      <Marquee />
+    <main className="w-full min-h-screen bg-[#EFEFEF] dark:bg-[#070709] overflow-x-clip transition-colors duration-300">
+      <AxionLandingPage />
+      <TechShelf3D />
       <Expertise />
-      <InsightsSection />
-      <CounterSection />
-      <Insights />
+      <TestimonialsSection />
+      <FAQSection />
       <ContactForm />
       <Footer />
-    </>
+    </main>
   );
 }

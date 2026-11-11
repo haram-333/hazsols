@@ -155,13 +155,13 @@ export default function HeroSection() {
           </h1>
 
           <p ref={subRef} className="hero__sub" style={{ opacity: 0 }}>
-            Redefining digital velocity with cutting-edge solutions<br />
-            and rapid deployment from Lahore to everywhere.
+            Websites, mobile apps, and custom software<br />
+            designed and shipped cleanly from Lahore to everywhere.
           </p>
 
           <div ref={actionsRef} className="hero__actions" style={{ opacity: 0 }}>
             <Link href="/contact" className="btn btn--accent magnetic-btn" id="hero-cta-btn">
-              Accelerate Your Future
+              Start a project
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>

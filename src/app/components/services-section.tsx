@@ -38,9 +38,9 @@ const SERVICES = [
       </svg>
     ),
     num: "03",
-    name: "AI Solutions",
-    tagline: "Rapid deployment.",
-    body: "Automation and intelligence built into your core product — not bolted on. Cutting-edge solutions and rapid deployment.",
+    name: "AI Development",
+    tagline: "Practical automation.",
+    body: "Document search, assistants, and workflow automation wired directly into your real databases and tools.",
     href: "/services/ai",
   },
   {

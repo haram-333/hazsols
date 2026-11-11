@@ -22,6 +22,10 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
 
+      if (typeof window !== 'undefined') {
+        (window as any).__lenis = lenis;
+      }
+
       function raf(time: number) {
         if (lenis) {
           lenis.raf(time);
@@ -35,6 +39,9 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     }
 
     return () => {
+      if (typeof window !== 'undefined' && (window as any).__lenis === lenis) {
+        (window as any).__lenis = null;
+      }
       if (rafId) {
         cancelAnimationFrame(rafId);
       }
