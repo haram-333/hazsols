@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import HazsolsLogo from "./hazsols-logo";
 
 const NAV_LINKS = [
   { label: "About", href: "/about" },
@@ -48,15 +48,8 @@ export default function Navigation() {
       <nav className={`nav${scrolled ? " scrolled" : ""}`} aria-label="Main navigation">
         <div className="container nav__inner">
           {/* Logo */}
-          <Link href="/" className="nav__logo" aria-label="Hazsols Home">
-            <Image
-              src="/logo.png"
-              alt="Hazsols"
-              width={40}
-              height={40}
-              priority
-              style={{ width: 40, height: 40, objectFit: "contain" }}
-            />
+          <Link href="/" className="nav__logo group" aria-label="Hazsols Home">
+            <HazsolsLogo size={40} surface="auto" animation="hover" />
           </Link>
 
           {/* Desktop Links */}
@@ -129,14 +122,8 @@ export default function Navigation() {
             justifyContent: "space-between",
           }}
         >
-          <Link href="/" onClick={closeMenu} aria-label="Hazsols Home">
-            <Image
-              src="/logo.png"
-              alt="Hazsols"
-              width={36}
-              height={36}
-              style={{ width: 36, height: 36, objectFit: "contain" }}
-            />
+          <Link href="/" onClick={closeMenu} className="group inline-flex items-center" aria-label="Hazsols Home">
+            <HazsolsLogo size={36} surface="dark" animation="hover" />
           </Link>
           <button
             className="nav__hamburger open"

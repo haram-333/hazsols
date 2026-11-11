@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;700;900&display=swap');
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* NProgress Loading Bar Customization */
 #nprogress {
@@ -31,11 +32,11 @@
 /* CSS Variables for Theme */
 :root {
   --primary-color: #c8f04a;
-  --bg-color: #050505;
-  --text-color: #ffffff;
+  --bg-color: #070709;
+  --text-color: #f5f5f7;
   --header-bg: transparent;
-  --dropdown-bg: #1a1a1a;
-  --hover-bg: #2d2d2d;
+  --dropdown-bg: #131419;
+  --hover-bg: #1c1e26;
   --font-outfit: 'Outfit', sans-serif;
   --font-inter: 'Inter', sans-serif;
 }
@@ -48,7 +49,20 @@
   --hover-bg: #f8f9fa;
 }
 
-/* Prevent flash of wrong theme */
+[data-theme="dark"] {
+  --bg-color: #070709;
+  --text-color: #f5f5f7;
+  --header-bg: transparent;
+  --dropdown-bg: #131419;
+  --hover-bg: #1c1e26;
+}
+
+/* Prevent flash of wrong theme and horizontal scroll leak on mobile */
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 html {
   color-scheme: light;
 }
@@ -58,6 +72,33 @@ html[data-theme="dark"] {
 }
 
 /* Global transition for theme changes removed to fix Tailwind utility overriding */
+
+/* Liquid Glass Utilities */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.liquid-glass-strong {
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+  box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.12);
+}
 
 /* Lenis smooth scrolling */
 html.lenis {
@@ -112,6 +153,10 @@ h1, h2, h3, h4, h5, h6 {
 .font-mono,
 .font-serif {
   font-family: var(--font-inter) !important;
+}
+
+.font-montserrat {
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif !important;
 }
 
 .mission-text-line {
@@ -1642,12 +1687,12 @@ ol {
 
 /* Text selection styling */
 ::selection {
-  background-color: var(--primary-color);
+  background-color: #0CABA3;
   color: white;
 }
 
 ::-moz-selection {
-  background-color: var(--primary-color);
+  background-color: #0CABA3;
   color: white;
 }
 
@@ -5561,3 +5606,156 @@ ol {
 .mobile-menu.active .mobile-nav-link:nth-child(4) { animation-delay: 0.4s; }
 .mobile-menu.active .mobile-nav-link:nth-child(5) { animation-delay: 0.5s; }
 .mobile-menu.active .mobile-nav-link:nth-child(6) { animation-delay: 0.6s; }
+
+/* ========================================= */
+/* HAZSOLS #3 OPTICAL H-S LOGO ANIMATIONS */
+/* ========================================= */
+.hazsols-logo {
+  overflow: visible;
+}
+
+.hazsols-logo .hazsols-part {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease, filter 0.35s ease;
+}
+
+.hazsols-ink-auto {
+  fill: #ffffff;
+  stroke: #ffffff;
+}
+
+[data-theme="light"] .hazsols-ink-auto {
+  fill: #0f172a;
+  stroke: #0f172a;
+}
+
+/* Hover Split animation (works on direct SVG hover or parent .group / link hover) */
+.hazsols-logo--hover {
+  cursor: pointer;
+}
+
+.hazsols-logo--hover:hover .hazsols-tr,
+.group:hover .hazsols-logo--hover .hazsols-tr,
+a:hover .hazsols-logo--hover .hazsols-tr {
+  transform: translate(4px, -4px);
+}
+
+.hazsols-logo--hover:hover .hazsols-bl,
+.group:hover .hazsols-logo--hover .hazsols-bl,
+a:hover .hazsols-logo--hover .hazsols-bl {
+  transform: translate(-4px, 4px);
+}
+
+.hazsols-logo--hover:hover .hazsols-core,
+.group:hover .hazsols-logo--hover .hazsols-core,
+a:hover .hazsols-logo--hover .hazsols-core {
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 10px rgba(12, 171, 163, 0.65));
+}
+
+/* Continuous Volt Snap Lock animation (loader splash) */
+@keyframes hazsolsSnapWing {
+  0% {
+    transform: translate(var(--wx, -20px), var(--wy, -14px)) scale(0.85);
+    opacity: 0;
+  }
+  45%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes hazsolsBoltIgnite {
+  0%, 15% {
+    transform: scale(0.7) skewX(-12deg);
+    opacity: 0;
+    filter: brightness(1.5);
+  }
+  45% {
+    transform: scale(1.06) skewX(0deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 14px rgba(12, 171, 163, 0.8));
+  }
+  65%, 100% {
+    transform: scale(1) skewX(0deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 0px rgba(12, 171, 163, 0));
+  }
+}
+
+.hazsols-logo--volt-snap .hazsols-tr {
+  --wx: 20px;
+  --wy: -18px;
+  animation: hazsolsSnapWing 1.2s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
+}
+
+.hazsols-logo--volt-snap .hazsols-bl {
+  --wx: -20px;
+  --wy: 18px;
+  animation: hazsolsSnapWing 1.2s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
+}
+
+.hazsols-logo--volt-snap .hazsols-core {
+  animation: hazsolsBoltIgnite 1.2s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
+}
+
+/* Orbital Hub Animation (Subpage Hero Revolving Tech Icons) */
+@keyframes hazsolsOrbitClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hazsolsOrbitCounter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.hero-orbit-ring-cw {
+  animation: hazsolsOrbitClockwise var(--orbit-duration, 34s) linear infinite;
+}
+
+.hero-orbit-ring-cw .hero-orbit-counter-item {
+  animation: hazsolsOrbitCounter var(--orbit-duration, 34s) linear infinite;
+}
+
+.hero-orbit-ring-ccw {
+  animation: hazsolsOrbitCounter var(--orbit-duration-inner, 24s) linear infinite;
+}
+
+.hero-orbit-ring-ccw .hero-orbit-counter-item-inner {
+  animation: hazsolsOrbitClockwise var(--orbit-duration-inner, 24s) linear infinite;
+}
+
+.hero-orbit-stage:hover .hero-orbit-ring-cw,
+.hero-orbit-stage:hover .hero-orbit-counter-item,
+.hero-orbit-stage:hover .hero-orbit-ring-ccw,
+.hero-orbit-stage:hover .hero-orbit-counter-item-inner {
+  animation-play-state: paused;
+}
+
+/* Bento Card Illuminated Pointer Border Mask */
+.bento-border-mask {
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  padding: 1.25px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-orbit-ring-cw,
+  .hero-orbit-counter-item,
+  .hero-orbit-ring-ccw,
+  .hero-orbit-counter-item-inner {
+    animation: none !important;
+  }
+}

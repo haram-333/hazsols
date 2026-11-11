@@ -38,7 +38,7 @@ export default function Marquee() {
           <span className="text-[#c8f04a]">In</span>
         </h2>
         <p className="mt-6 md:mt-8 text-gray-500 font-inter text-xs sm:text-sm md:text-base tracking-widest uppercase max-w-sm font-semibold text-center">
-          Empowering your vision with a modern stack of cutting-edge technologies.
+          Frameworks and tools we build client software on every day.
         </p>
       </div>
 
@@ -55,7 +55,7 @@ export default function Marquee() {
                     {marqueeLogos1.map((logo, index) => (
                         <div key={index} className="flex items-center justify-center w-[100px] sm:w-[120px] lg:w-[160px] h-[50px] sm:h-[60px] lg:h-[80px] shrink-0 grayscale hover:grayscale-0 transition-all duration-300 mx-3 md:mx-4 lg:mx-8">
                             <div className="relative w-full h-full">
-                                <Image src={logo.src} alt={logo.name} fill className="object-contain drop-shadow-sm" />
+                                <Image src={logo.src} alt={logo.name} fill sizes="(max-width: 640px) 100px, (max-width: 1024px) 120px, 160px" className="object-contain drop-shadow-sm" />
                             </div>
                         </div>
                     ))}
@@ -69,7 +69,7 @@ export default function Marquee() {
                     {marqueeLogos2.map((logo, index) => (
                         <div key={index} className="flex items-center justify-center w-[100px] sm:w-[120px] lg:w-[160px] h-[50px] sm:h-[60px] lg:h-[80px] shrink-0 grayscale hover:grayscale-0 transition-all duration-300 mx-3 md:mx-4 lg:mx-8">
                             <div className="relative w-full h-full">
-                                <Image src={logo.src} alt={logo.name} fill className="object-contain drop-shadow-sm" />
+                                <Image src={logo.src} alt={logo.name} fill sizes="(max-width: 640px) 100px, (max-width: 1024px) 120px, 160px" className="object-contain drop-shadow-sm" />
                             </div>
                         </div>
                     ))}

@@ -1,286 +1,423 @@
-'use client';
+"use client";
 
-import Header from '@/app/components/header';
-import ContactForm from '@/app/components/contact-form';
-import Footer from '@/app/components/footer';
-import Image from 'next/image';
+import React from "react";
+import Link from "next/link";
+import {
+  ArrowUpRight,
+  Compass,
+  Cpu,
+  Eye,
+  GitBranch,
+  Layers,
+  MessageSquare,
+  ShieldCheck,
+  Sparkles,
+  Target,
+  Terminal,
+  Zap,
+} from "lucide-react";
+import SubpageHero from "@/app/components/subpage-hero";
+import TextRollButton from "@/app/components/text-roll-button";
+import ContactForm from "@/app/components/contact-form";
+import Footer from "@/app/components/footer";
+import BentoCard from "@/app/components/bento-card";
 
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+const CORE_VALUES = [
+  {
+    index: "01",
+    title: "Ship Every Week",
+    description:
+      "We share working staging links regularly instead of disappearing for months at a time.",
+    icon: Zap,
+    spanClass: "lg:col-span-7",
+  },
+  {
+    index: "02",
+    title: "Dependable Delivery",
+    description:
+      "When we commit to a feature or deadline, we stay on top of it through launch and beyond.",
+    icon: ShieldCheck,
+    spanClass: "lg:col-span-5",
+  },
+  {
+    index: "03",
+    title: "Do The Details Right",
+    description:
+      "Clean mobile views, proper error states, and solid code—even on parts clients never see.",
+    icon: Sparkles,
+    spanClass: "lg:col-span-5",
+  },
+  {
+    index: "04",
+    title: "Plain, Honest Updates",
+    description:
+      "Direct, clear communication with no jargon or hidden surprises along the way.",
+    icon: MessageSquare,
+    spanClass: "lg:col-span-7",
+  },
+];
 
-gsap.registerPlugin(ScrollTrigger);
+const CAPABILITY_LINKS = [
+  {
+    tag: "01",
+    title: "Web Development",
+    summary: "Fast websites, client portals, and Next.js web applications.",
+    href: "/services/web",
+    spanClass: "lg:col-span-7",
+  },
+  {
+    tag: "02",
+    title: "Mobile Applications",
+    summary: "iOS and Android apps built with Flutter and React Native.",
+    href: "/services/app",
+    spanClass: "lg:col-span-5",
+  },
+  {
+    tag: "03",
+    title: "AI & Automation",
+    summary: "Document search, customer support assistants, and workflow automation.",
+    href: "/services/ai",
+    spanClass: "lg:col-span-5",
+  },
+  {
+    tag: "04",
+    title: "Custom Software",
+    summary: "Internal tools, custom ERPs, APIs, and cloud backends you own outright.",
+    href: "/services/custom-software",
+    spanClass: "lg:col-span-7",
+  },
+];
+
+const STUDIO_TELEMETRY = [
+  { label: "Weekly Staging Links", detail: "See live builds every week as work progresses", icon: GitBranch },
+  { label: "Full Code Ownership", detail: "Everything sits in your GitHub repository", icon: Terminal },
+  { label: "Clean Architecture", detail: "Typed APIs, responsive screens & accessible UI", icon: Layers },
+  { label: "Modern Web, Mobile & AI", detail: "Next.js, React Native, Flutter & Python", icon: Cpu },
+];
 
 export default function AboutPage() {
-    const [mounted, setMounted] = useState(false);
-
-    const insightsRef = useRef<HTMLDivElement>(null);
-    const imgRef = useRef<HTMLDivElement>(null);
-    const textRef = useRef<HTMLDivElement>(null);
-    const labelRef = useRef<HTMLDivElement>(null);
-    const titleRef = useRef<HTMLHeadingElement>(null);
-    const descRef = useRef<HTMLParagraphElement>(null);
-    const buttonRef = useRef<HTMLAnchorElement>(null);
-
-    useEffect(() => {
-        // Set theme immediately to prevent flicker
-        try {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        } catch (error) {
-            console.warn('Theme setting failed:', error);
-            document.documentElement.setAttribute('data-theme', 'light');
+  return (
+    <main className="w-full min-h-screen bg-[#EFEFEF] dark:bg-[#070709] text-gray-900 dark:text-gray-100 overflow-x-clip transition-colors duration-300">
+      {/* ── Orbital Hub Hero ── */}
+      <SubpageHero
+        indexLabel="01"
+        eyebrow="About Hazsols"
+        orbitPreset="about"
+        title={
+          <>
+            Real Engineers.
+            <br className="hidden sm:block" />{" "}
+            <span className="text-gray-500 dark:text-white/45 font-normal">
+              Software That Works.
+            </span>
+          </>
         }
-        setMounted(true);
-    }, []);
-
-    useEffect(() => {
-        if (!mounted) return;
-
-        const insights = insightsRef.current;
-        const img = imgRef.current;
-        const text = textRef.current;
-        const label = labelRef.current;
-        const title = titleRef.current;
-        const desc = descRef.current;
-        const button = buttonRef.current;
-
-        if (!insights || !img || !text || !label || !title || !desc || !button) return;
-
-        // Check if mobile/tablet (flex-direction: column)
-        const isMobile = window.innerWidth <= 1200;
-
-        if (isMobile) {
-            // Mobile/Tablet: Show text immediately, no GSAP animations
-            gsap.set([label, title, desc, button], { opacity: 1 });
-            gsap.set(img, {
-                width: "100%",
-                height: "60vh",
-                position: "relative",
-                top: "auto",
-                left: "auto",
-                right: "auto",
-                y: "auto"
-            });
-        } else {
-            // Desktop: Use GSAP animations
-            gsap.set([label, title, desc, button], { opacity: 0 });
-
-            // Create the main timeline
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: insights,
-                    start: "top top",
-                    end: "+=200%",
-                    scrub: 1,
-                    pin: true
-                }
-            });
-
-            // Add video width animation to timeline (0-100% of timeline)
-            tl.to(img, {
-                width: "50%",
-                left: 0,
-                top: '50%',
-                y: '-50%',
-                position: 'absolute',
-                duration: 2,
-                ease: "power2.out"
-            })
-                // Add text animations (starts at 100% of timeline - when video reaches 50%)
-                .to(label, {
-                    opacity: 1,
-                    duration: 0.6,
-                    ease: "power2.out"
-                }, 1.0)
-                .to(title, {
-                    opacity: 1,
-                    duration: 0.6,
-                    ease: "power2.out"
-                }, 1.2)
-                .to(desc, {
-                    opacity: 1,
-                    duration: 0.6,
-                    ease: "power2.out"
-                }, 1.4)
-                .to(button, {
-                    opacity: 1,
-                    duration: 0.6,
-                    ease: "power2.out"
-                }, 1.6);
+        description="Hazsols is a web, mobile, and custom software studio. We work directly with founders and business teams to design, build, and maintain reliable software."
+        actions={
+          <>
+            <TextRollButton
+              text="Get in touch"
+              href="#contact"
+              theme="orange"
+              fullWidthOnMobile
+            />
+            <TextRollButton
+              text="See how we work"
+              href="/process"
+              theme="outline"
+              fullWidthOnMobile
+            />
+          </>
         }
+      />
 
-        return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        };
-    }, [mounted]);
-
-    if (!mounted) {
-        return (
-            <div style={{ minHeight: '100vh', background: '#000', color: '#fff' }}>
-                <div style={{ padding: '2rem', textAlign: 'center' }}>
-                    <h1>Loading...</h1>
-                </div>
+      {/* ── Section 1: Our Philosophy (Full-Width Asymmetric Bento) ── */}
+      <section className="relative w-full bg-white dark:bg-[#0C0D10] py-16 sm:py-24 lg:py-28 border-b border-black/10 dark:border-white/[0.08] transition-colors duration-300">
+        <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+          <div className="flex items-center gap-3 mb-6 sm:mb-8">
+            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-[11px] sm:text-[12px] font-semibold flex items-center justify-center">
+              1
             </div>
-        );
-    }
+            <div className="text-[12px] sm:text-[13px] font-medium uppercase tracking-wider border border-gray-200 dark:border-white/15 rounded-full px-3.5 py-1 text-gray-900 dark:text-white/90 dark:bg-white/[0.04]">
+              Our Philosophy
+            </div>
+          </div>
 
-    return (
-        <>
-            <Header />
-            <main className="insights font-sans">
-                {/* About Hero Section */}
-                <section className="service-hero">
-                    {/* Background Image */}
-                    <div className="hero-background">
-                        <Image
-                            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1920&h=1080&fit=crop&crop=center"
-                            alt="About Us Background"
-                            fill
-                            className="background-image"
-                            priority
-                        />
-                    </div>
+          <h2 className="text-[clamp(1.65rem,4.4vw,3.4rem)] font-medium leading-[1.1] tracking-[-0.025em] text-gray-900 dark:text-white mb-10 sm:mb-14 max-w-5xl">
+            Good software comes from clarity, direct collaboration, and careful work.
+          </h2>
 
-                    {/* Liquid Glass Effect Container */}
-                    <div className="glass-container">
-                        {/* Manual blur layer behind glass card */}
-                        <div className="glass-blur-layer">
-                            <Image
-                                src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1920&h=1080&fit=crop&crop=center"
-                                alt="About Us Background Blurred"
-                                fill
-                                className="glass-blur-image"
-                                priority
-                            />
-                        </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+            {/* Left Narrative Bento Card (7 cols) */}
+            <BentoCard className="lg:col-span-7 p-7 sm:p-10 flex flex-col justify-between gap-8">
+              <div>
+                <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#0CABA3] mb-3">
+                  Who We Are
+                </span>
+                <p className="text-base sm:text-xl leading-[1.68] text-gray-700 dark:text-gray-200 font-normal">
+                  We started Hazsols with a simple goal: build websites and software
+                  that actually help businesses run better and win customers—without
+                  the agency fluff, slow turnarounds, or messy codebases.
+                </p>
+              </div>
 
-                        <div className="glass-card">
-                            <div className="glass-content">
-                                <div className="service-category">ABOUT US</div>
-                                <h1 className="service-title">Empowering Businesses, Inspiring Innovation</h1>
-                                <a href="/contact" className="cta-button">
-                                    Get in Touch
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <div className="insights" ref={insightsRef}>
-                    <div className="img-section" ref={imgRef}>
-                        <Image
-                            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&h=1080&fit=crop&crop=center"
-                            alt="Our Team Philosophy"
-                            width={1920}
-                            height={1080}
-                        />
-                    </div>
-                    <div className="insights-text" ref={textRef}>
-                        <div className="insights-label" ref={labelRef}>OUR PHILOSOPHY</div>
-                        <h1 className="insights-title" ref={titleRef}>Empowering people and businesses through innovation.</h1>
-                        <p className="insights-description" ref={descRef}>At HazSols, our philosophy is simple empowering people and businesses through innovation. We believe in fostering a collaborative environment, investing in talent, and delivering meaningful solutions that drive progress for our clients and communities worldwide.</p>
-                        <a href="/contact" className="insights-cta" ref={buttonRef}>GET IN TOUCH</a>
-                    </div>
+              <div className="space-y-6">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-white/15 bg-gray-50 dark:bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300">
+                    <Compass className="w-3.5 h-3.5 text-[#0CABA3]" />
+                    Talk Direct To Engineers
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-white/15 bg-gray-50 dark:bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300">
+                    <Zap className="w-3.5 h-3.5 text-[#0CABA3]" />
+                    Clients Across UK, US &amp; Beyond
+                  </span>
                 </div>
-            </main>
 
-            {/* Our Mission Section - Outside main container for full width */}
-            <section className="mission-section">
-                <div className="mission-bg-circle"></div>
-                <div className="mission-container">
-                    <h2 className="mission-title">
-                        <span className="mission-title-our">Our</span>
-                        <span className="mission-title-mission">Mission</span>
-                    </h2>
-                        <div className="mission-content-box">
-                            <div className="mission-quote-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 14" fill="none" className="quote-svg">
-                                    <path d="M14.5 7H12V5C12 3.89688 12.8969 3 14 3H14.25C14.6656 3 15 2.66563 15 2.25V0.75C15 0.334375 14.6656 0 14.25 0H14C11.2375 0 9 2.2375 9 5V12.5C9 13.3281 9.67188 14 10.5 14H14.5C15.3281 14 16 13.3281 16 12.5V8.5C16 7.67188 15.3281 7 14.5 7ZM5.5 7H3V5C3 3.89688 3.89688 3 5 3H5.25C5.66563 3 6 2.66563 6 2.25V0.75C6 0.334375 5.66563 0 5.25 0H5C2.2375 0 0 2.2375 0 5V12.5C0 13.3281 0.671875 14 1.5 14H5.5C6.32812 14 7 13.3281 7 12.5V8.5C7 7.67188 6.32812 7 5.5 7Z" fill="currentColor"></path>
-                                </svg>
-                            </div>
-                        <p className="mission-text">
-                            To empower businesses with cutting-edge technology solutions, unlocking their growth potential by connecting them with passionate and skilled engineers.
-                        </p>
-                    </div>
+                <div>
+                  <TextRollButton
+                    text="Work with us"
+                    href="#contact"
+                    theme="orange"
+                  />
                 </div>
-            </section>
+              </div>
+            </BentoCard>
 
-            {/* Our Vision Section */}
-            <section className="vision-section">
-                <div className="vision-bg-circle"></div>
-                <div className="vision-container">
-                    <h2 className="vision-title">
-                        <span className="vision-title-our">Our</span>
-                        <span className="vision-title-vision">Vision</span>
-                    </h2>
-                    <div className="vision-content-box">
-                        <div className="vision-quote-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 14" fill="none" className="quote-svg">
-                                <path d="M14.5 7H12V5C12 3.89688 12.8969 3 14 3H14.25C14.6656 3 15 2.66563 15 2.25V0.75C15 0.334375 14.6656 0 14.25 0H14C11.2375 0 9 2.2375 9 5V12.5C9 13.3281 9.67188 14 10.5 14H14.5C15.3281 14 16 13.3281 16 12.5V8.5C16 7.67188 15.3281 7 14.5 7ZM5.5 7H3V5C3 3.89688 3.89688 3 5 3H5.25C5.66563 3 6 2.66563 6 2.25V0.75C6 0.334375 5.66563 0 5.25 0H5C2.2375 0 0 2.2375 0 5V12.5C0 13.3281 0.671875 14 1.5 14H5.5C6.32812 14 7 13.3281 7 12.5V8.5C7 7.67188 6.32812 7 5.5 7Z" fill="currentColor"></path>
-                            </svg>
+            {/* Right Dark Studio Schematic Bento Card (5 cols - no filler stock photos) */}
+            <BentoCard
+              surface="dark"
+              className="lg:col-span-5 p-7 sm:p-9 flex flex-col justify-between gap-6"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#35dbd3]">
+                  Operating Standard
+                </span>
+                <span className="rounded-full bg-white/[0.07] border border-white/[0.1] px-2.5 py-0.5 text-[10px] font-mono text-white/60">
+                  HAZSOLS CORE
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {STUDIO_TELEMETRY.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={item.label}
+                      className="flex items-start gap-3.5 rounded-2xl bg-white/[0.04] border border-white/[0.08] p-3.5"
+                    >
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0CABA3]/15 border border-[#0CABA3]/30 text-[#35dbd3]">
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold text-white">
+                          {item.label}
                         </div>
-                        <p className="vision-text">
-                            At HazSols, we envision transforming IT systems into smart, agile, and AI-driven digital assets. With a decade of expertise, we empower global clients through innovative, adaptive solutions, shaping a future where technology meets the dynamic demands of a connected world.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Our Values Section */}
-            <section className="values-section">
-                <div className="values-container">
-                    <div className="values-header">
-                        <span className="values-label">OUR VALUES</span>
-                        <h2 className="values-title">We Believe in Providing Values.</h2>
-                    </div>
-                        <div className="values-cards">
-                            <div className="value-card">
-                                <div className="value-icon">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                                    </svg>
-                                </div>
-                                <h3 className="value-card-title">Ship & Iterate</h3>
-                                <p className="value-card-description">We move swiftly, refining our approach with every step to maintain a leading edge.</p>
-                            </div>
-                            <div className="value-card">
-                                <div className="value-icon">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                        <path d="M9 12l2 2 4-4"/>
-                                    </svg>
-                                </div>
-                                <h3 className="value-card-title">Trusted Pair of Hands</h3>
-                                <p className="value-card-description">Dependable and steadfast, we are always there when it matters most.</p>
-                            </div>
-                            <div className="value-card">
-                                <div className="value-icon">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                    </svg>
-                                </div>
-                                <h3 className="value-card-title">Overdeliver on the Promise</h3>
-                                <p className="value-card-description">Exceeding expectations is our standard, going beyond what&apos;s assured.</p>
-                            </div>
-                            <div className="value-card">
-                                <div className="value-icon">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <circle cx="12" cy="12" r="3"/>
-                                        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
-                                    </svg>
-                                </div>
-                                <h3 className="value-card-title">Clear is Kind</h3>
-                                <p className="value-card-description">Transparent, honest communication keeps everyone on the same page.</p>
-                            </div>
+                        <div className="text-xs text-white/55 mt-0.5">
+                          {item.detail}
                         </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </BentoCard>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 2: Mission & Vision (Full-Width Asymmetric Obsidian Bento) ── */}
+      <section className="relative w-full bg-[#08080a] text-white py-20 sm:py-28 lg:py-32 overflow-x-clip border-b border-white/[0.08]">
+        <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[720px] h-[320px] bg-[#0CABA3]/[0.06] blur-[140px] pointer-events-none" />
+
+        <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+            <div>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white text-black text-[11px] font-bold flex items-center justify-center">
+                  2
                 </div>
-            </section>
+                <div className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-wider uppercase border border-white/10 rounded-full px-4 py-1 text-white/90 bg-white/[0.04] backdrop-blur-md">
+                  Mission &amp; Vision
+                </div>
+              </div>
 
-            {/* Contact Form Section */}
-            <ContactForm />
+              <h2 className="text-[clamp(1.9rem,4.8vw,3.5rem)] font-medium leading-[1.08] tracking-[-0.03em] text-white">
+                Why We Do This Work.
+              </h2>
+            </div>
 
-            {/* Footer */}
-            <Footer />
-        </>
-    );
+            <p className="text-[15px] text-gray-400 max-w-md leading-relaxed">
+              Every project is built so your team owns a fast, dependable product
+              you won&apos;t need to rebuild a year later.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+            {/* Mission Card (7 cols) */}
+            <BentoCard
+              surface="dark"
+              className="lg:col-span-7 p-8 sm:p-10 lg:p-12 flex flex-col justify-between min-h-[300px]"
+            >
+              <div className="flex items-center justify-between gap-4 mb-10">
+                <span className="text-xs font-mono font-bold tracking-widest uppercase text-[#0CABA3]">
+                  [01] OUR MISSION
+                </span>
+                <div className="w-11 h-11 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#0CABA3] group-hover:bg-[#0CABA3] group-hover:text-white transition-colors duration-300">
+                  <Target className="w-5 h-5" />
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight mb-4">
+                  Our Mission
+                </h3>
+                <p className="text-[16px] sm:text-[18px] text-gray-300 leading-relaxed font-normal max-w-2xl">
+                  Build websites, apps, and custom tools that look sharp, run fast,
+                  and solve genuine business problems—delivered cleanly and on time.
+                </p>
+              </div>
+            </BentoCard>
+
+            {/* Vision Card (5 cols) */}
+            <BentoCard
+              surface="dark"
+              className="lg:col-span-5 p-8 sm:p-10 lg:p-12 flex flex-col justify-between min-h-[300px]"
+            >
+              <div className="flex items-center justify-between gap-4 mb-10">
+                <span className="text-xs font-mono font-bold tracking-widest uppercase text-[#0CABA3]">
+                  [02] OUR VISION
+                </span>
+                <div className="w-11 h-11 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#0CABA3] group-hover:bg-[#0CABA3] group-hover:text-white transition-colors duration-300">
+                  <Eye className="w-5 h-5" />
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight mb-4">
+                  Our Vision
+                </h3>
+                <p className="text-[16px] sm:text-[18px] text-gray-300 leading-relaxed font-normal">
+                  Be the engineering team businesses come back to project after
+                  project because the work is reliable and straightforward.
+                </p>
+              </div>
+            </BentoCard>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 3: Our Core Values (Full-Width Asymmetric 12-Col Bento) ── */}
+      <section className="relative w-full bg-[#F5F5F5] dark:bg-[#101115] py-20 sm:py-28 border-b border-black/10 dark:border-white/[0.08] transition-colors duration-300">
+        <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+            <div>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-[11px] font-semibold flex items-center justify-center">
+                  3
+                </div>
+                <div className="text-[12px] sm:text-[13px] font-medium uppercase tracking-wider border border-gray-300 dark:border-white/15 rounded-full px-3.5 py-1 text-gray-900 dark:text-white/90 dark:bg-white/[0.04]">
+                  Our Values
+                </div>
+              </div>
+
+              <h2 className="text-[clamp(1.9rem,4.8vw,3.5rem)] font-medium leading-[1.08] tracking-[-0.03em] text-gray-900 dark:text-white">
+                How We Work Day to Day.
+              </h2>
+            </div>
+
+            <p className="text-[15px] text-gray-600 dark:text-gray-400 max-w-md leading-relaxed">
+              Four simple standards we follow on every project from kick-off to
+              launch.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+            {CORE_VALUES.map((val) => {
+              const Icon = val.icon;
+              return (
+                <BentoCard
+                  key={val.index}
+                  className={`${val.spanClass} p-7 sm:p-9 flex flex-col justify-between min-h-[240px]`}
+                >
+                  <div className="flex items-center justify-between mb-8">
+                    <span className="text-xs font-mono font-semibold text-gray-400 dark:text-gray-500">
+                      [{val.index}]
+                    </span>
+                    <div className="w-11 h-11 rounded-2xl bg-[#0CABA3]/10 border border-[#0CABA3]/20 text-[#0CABA3] flex items-center justify-center group-hover:bg-[#0CABA3] group-hover:text-white transition-colors duration-300">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white mb-2.5 tracking-tight">
+                      {val.title}
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl">
+                      {val.description}
+                    </p>
+                  </div>
+                </BentoCard>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 4: Explore Services Asymmetric Bento Strip ── */}
+      <section className="relative w-full bg-[#EDEBE6] dark:bg-[#0C0D10] py-16 sm:py-24 border-b border-black/10 dark:border-white/[0.08] transition-colors duration-300">
+        <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <div className="text-xs font-mono uppercase tracking-[0.18em] text-[#0CABA3] font-semibold mb-2">
+                WHAT WE BUILD
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-medium tracking-tight text-gray-900 dark:text-white">
+                Explore our specialized engineering services.
+              </h2>
+            </div>
+
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white hover:text-[#0CABA3] transition-colors"
+            >
+              <span>View all services</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
+            {CAPABILITY_LINKS.map((cap) => (
+              <BentoCard
+                key={cap.href}
+                href={cap.href}
+                wrapperClassName={cap.spanClass}
+                className="p-6 sm:p-8 flex flex-col justify-between gap-5 h-full"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-bold text-[#0CABA3]">
+                    {cap.tag}
+                  </span>
+                  <div className="w-9 h-9 rounded-full bg-gray-100 dark:bg-white/[0.06] group-hover:bg-[#0CABA3] text-gray-900 dark:text-white group-hover:text-white flex items-center justify-center transition-colors">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white group-hover:text-[#0CABA3] transition-colors">
+                    {cap.title}
+                  </h3>
+                  <p className="mt-1.5 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {cap.summary}
+                  </p>
+                </div>
+              </BentoCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <ContactForm />
+      <Footer />
+    </main>
+  );
 }

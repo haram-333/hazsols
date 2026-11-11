@@ -2,6 +2,7 @@
 
 import { useEffect, useState, ReactNode } from "react";
 import "../loader.css";
+import HazsolsLogo from "./hazsols-logo";
 
 // Persist the highest progress achieved across React unmounts/remounts (e.g. Strict Mode or mobile layout shifts)
 let GLOBAL_MAX_PROGRESS = 0;
@@ -17,9 +18,11 @@ export default function PageLoader({ children }: { children: ReactNode }) {
     if (GLOBAL_HAS_LOADED) return;
 
     let isCancelled = false;
+    let hasTriggeredExit = false;
     let targetProgress = GLOBAL_MAX_PROGRESS;
     let currentProgress = GLOBAL_MAX_PROGRESS;
     let animationFrameId: number;
+    const timers: ReturnType<typeof setTimeout>[] = [];
 
     const mediaElements = Array.from(document.querySelectorAll("img, video"));
     let loadedCount = 0;
@@ -31,50 +34,65 @@ export default function PageLoader({ children }: { children: ReactNode }) {
       targetProgress = Math.max(targetProgress, newTarget);
     };
 
-    const animateProgress = () => {
-      if (isCancelled) return;
-      
-      currentProgress += (targetProgress - currentProgress) * 0.015;
-      
-      if (mediaElements.length === 0 || targetProgress === 100) {
-        currentProgress += (100 - currentProgress) * 0.01; 
-      }
+    const scheduleExitSequence = () => {
+      if (hasTriggeredExit || isCancelled) return;
+      hasTriggeredExit = true;
+      GLOBAL_MAX_PROGRESS = 100;
+      setDisplayProgress(100);
 
-      const roundedProgress = Math.round(currentProgress);
-      
-      // CRITICAL FIX: Guarantee progress NEVER ticks backwards globally
-      setDisplayProgress((prev) => {
-        const next = Math.max(prev, roundedProgress, GLOBAL_MAX_PROGRESS);
-        GLOBAL_MAX_PROGRESS = next;
-        
-        if (next >= 99) {
-          setTimeout(() => {
-            if (isCancelled) return;
-            setIsLoaded(true);
-            GLOBAL_HAS_LOADED = true;
+      // Pause a brief beat at 100% bar, zoom the logo from center (0.7s), then split reveal
+      timers.push(
+        setTimeout(() => {
+          if (isCancelled) return;
+          setIsLoaded(true);
+          GLOBAL_HAS_LOADED = true;
+
+          timers.push(
             setTimeout(() => {
               if (isCancelled) return;
               setStartReveal(true);
-              setTimeout(() => {
-                if (!isCancelled) setAnimationFinished(true);
-              }, 1600);
-            }, 150);
-          }, 600);
-          
-          return 100;
-        }
-        
-        return next;
-      });
 
-      if (roundedProgress < 99) {
-        animationFrameId = requestAnimationFrame(animateProgress);
+              timers.push(
+                setTimeout(() => {
+                  if (!isCancelled) setAnimationFinished(true);
+                }, 1150)
+              );
+            }, 650)
+          );
+        }, 120)
+      );
+    };
+
+    let lastTime = performance.now();
+
+    const animateProgress = (now: number) => {
+      if (isCancelled) return;
+
+      const dtFactor = Math.max(0.2, Math.min((now - lastTime) / 16.667, 3));
+      lastTime = now;
+
+      currentProgress += (targetProgress - currentProgress) * Math.min(0.036 * dtFactor, 0.9);
+
+      if (mediaElements.length === 0 || targetProgress === 100) {
+        currentProgress += (100 - currentProgress) * Math.min(0.038 * dtFactor, 0.9) + 0.36 * dtFactor;
       }
+
+      const roundedProgress = Math.min(100, Math.round(currentProgress));
+      const next = Math.max(roundedProgress, GLOBAL_MAX_PROGRESS);
+      GLOBAL_MAX_PROGRESS = next;
+
+      if (next >= 99) {
+        scheduleExitSequence();
+        return;
+      }
+
+      setDisplayProgress((prev) => Math.max(prev, next));
+      animationFrameId = requestAnimationFrame(animateProgress);
     };
 
     animationFrameId = requestAnimationFrame(animateProgress);
 
-    let fallbackTimer: NodeJS.Timeout;
+    let fallbackTimer: ReturnType<typeof setTimeout>;
 
     if (mediaElements.length === 0) {
       targetProgress = 100;
@@ -94,35 +112,47 @@ export default function PageLoader({ children }: { children: ReactNode }) {
           }
         }
       });
-      // Aggressive fallback to prevent getting stuck
-      fallbackTimer = setTimeout(() => { targetProgress = 100; }, 4000);
+      // Fast fallback so slow third-party assets never stall the loader
+      fallbackTimer = setTimeout(() => { targetProgress = 100; }, 2500);
     }
 
     return () => {
       isCancelled = true;
       cancelAnimationFrame(animationFrameId);
       if (fallbackTimer) clearTimeout(fallbackTimer);
+      timers.forEach(clearTimeout);
     };
   }, []);
 
   return (
     <>
-      <div className={`modern-loader ${isLoaded ? "loader-hidden" : ""}`}>
-        <div className="loader-noise"></div>
-        <div className="modern-loader-content">
-          <div className="loader-number-wrapper shimmer-text">
-            <span className="loader-number">{displayProgress}</span>
-            <span className="loader-percent">%</span>
+      {!animationFinished && (
+        <div
+          className={`modern-loader ${isLoaded ? "loader-hidden" : ""}`}
+          role="status"
+          aria-label="Loading Hazsols Solutions"
+        >
+          <div className="loader-noise"></div>
+          <div className="modern-loader-content">
+            <div className="loader-logo-stage">
+              <div className="loader-logo-glow" aria-hidden="true" />
+              <HazsolsLogo
+                variant="stacked"
+                showSublabel
+                size={124}
+                surface="dark"
+                animation="volt-snap"
+                className="relative z-10"
+                wordmarkClassName="text-2xl sm:text-[30px] tracking-[0.16em]"
+              />
+            </div>
           </div>
-          <div className="loader-brand">
-            HAZSOLS<br/>SYSTEMS
-          </div>
+          <div
+            className="modern-progress-bar shimmer-bg"
+            style={{ transform: `scaleX(${displayProgress / 100})` }}
+          />
         </div>
-        <div 
-          className="modern-progress-bar shimmer-bg"
-          style={{ transform: `scaleX(${displayProgress / 100})` }}
-        />
-      </div>
+      )}
 
       <div 
         className={`page-content-wrapper ${startReveal ? "content-revealed" : "content-hidden"} ${animationFinished ? "animation-complete" : "animation-locked"}`}

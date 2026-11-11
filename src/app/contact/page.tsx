@@ -1,116 +1,215 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Header from '@/app/components/header';
-import ContactForm from '@/app/components/contact-form';
-import Footer from '@/app/components/footer';
+import React, { useState } from "react";
+import Link from "next/link";
+import {
+  ArrowUpRight,
+  Check,
+  Clock,
+  Copy,
+  Mail,
+  MessageCircle,
+  Sparkles,
+} from "lucide-react";
+import SubpageHero from "@/app/components/subpage-hero";
+import ContactForm from "@/app/components/contact-form";
+import Footer from "@/app/components/footer";
+import VisitorClock from "@/app/components/visitor-clock";
+import BentoCard from "@/app/components/bento-card";
+import TextRollButton from "@/app/components/text-roll-button";
+
+const SERVICE_SCOPES = [
+  {
+    label: "Web Development",
+    href: "/services/web",
+  },
+  {
+    label: "Mobile App Development",
+    href: "/services/app",
+  },
+  {
+    label: "AI & Machine Learning",
+    href: "/services/ai",
+  },
+  {
+    label: "Custom Software & APIs",
+    href: "/services/custom-software",
+  },
+];
 
 export default function ContactPage() {
-    const [mounted, setMounted] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
-    useEffect(() => {
-        // Set theme immediately to prevent flicker
-        try {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        } catch (error) {
-            console.warn('Theme setting failed:', error);
-            document.documentElement.setAttribute('data-theme', 'light');
-        }
-        setMounted(true);
-    }, []);
-
-    if (!mounted) {
-        return (
-            <div style={{ minHeight: '100vh', background: '#000', color: '#fff' }}>
-                <div style={{ padding: '2rem', textAlign: 'center' }}>
-                    <h1>Loading...</h1>
-                </div>
-            </div>
-        );
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("hazsolssolution@gmail.com");
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2000);
+    } catch {
+      // Clipboard API unavailable; ignore gracefully
     }
+  };
 
-    return (
-        <>
-            <Header />
-            <main className="contact-page">
-                <div className="contact-header">
-                    <h1 className="contact-title">Get In Touch</h1>
-                    <p className="contact-subtitle">Ready to start your next project? Let&apos;s discuss how we can help you achieve your goals.</p>
-                </div>
-                
-                <div className="contact-content">
-                    <div className="contact-main-card">
-                        <div className="contact-left">
-                            <h2 className="info-title">Let&apos;s Talk Business</h2>
-                            <p className="info-description">
-                                We&apos;re here to help you bring your ideas to life. Whether you need a website, mobile app, 
-                                AI solution, or custom software, our team is ready to deliver exceptional results.
-                            </p>
-                            
-                            <div className="contact-email-section">
-                                <div className="email-icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                        <polyline points="22,6 12,13 2,6"/>
-                                    </svg>
-                                </div>
-                                <div className="email-text">
-                                    <h3>Email Us</h3>
-                                    <p>hello@hazsols.com</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div className="contact-right">
-                            <h3 className="services-title">Our Services</h3>
-                            <div className="services-grid">
-                                <div className="service-card">
-                                    <div className="service-icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                                            <line x1="8" y1="21" x2="16" y2="21"/>
-                                            <line x1="12" y1="17" x2="12" y2="21"/>
-                                        </svg>
-                                    </div>
-                                    <span>Web Development</span>
-                                </div>
-                                <div className="service-card">
-                                    <div className="service-icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                                            <line x1="8" y1="21" x2="16" y2="21"/>
-                                            <line x1="12" y1="17" x2="12" y2="21"/>
-                                        </svg>
-                                    </div>
-                                    <span>Mobile App Development</span>
-                                </div>
-                                <div className="service-card">
-                                    <div className="service-icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <circle cx="12" cy="12" r="3"/>
-                                            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
-                                        </svg>
-                                    </div>
-                                    <span>AI & Machine Learning</span>
-                                </div>
-                                <div className="service-card">
-                                    <div className="service-icon">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                                            <line x1="8" y1="21" x2="16" y2="21"/>
-                                            <line x1="12" y1="17" x2="12" y2="21"/>
-                                        </svg>
-                                    </div>
-                                    <span>Custom Software Development</span>
-                                </div>
-                            </div>
-                        </div>
+  return (
+    <main className="w-full min-h-screen bg-[#EFEFEF] dark:bg-[#070709] text-gray-900 dark:text-gray-100 overflow-x-clip transition-colors duration-300">
+      {/* ── Orbital Hub Hero ── */}
+      <SubpageHero
+        compact
+        eyebrow="Connect With Hazsols"
+        orbitPreset="contact"
+        title={
+          <>
+            Get In Touch.
+            <br className="hidden sm:block" />{" "}
+            <span className="text-gray-500 dark:text-white/45 font-normal">
+              Let&apos;s Build Something Great.
+            </span>
+          </>
+        }
+        description="Ready to start a project or have a quick question? Reach us on email or WhatsApp below, or fill out the form—we reply within 24 hours."
+        actions={
+          <>
+            <TextRollButton
+              text="Send project brief"
+              href="#contact"
+              theme="orange"
+              fullWidthOnMobile
+            />
+            <TextRollButton
+              text="Explore capabilities"
+              href="/services"
+              theme="outline"
+              fullWidthOnMobile
+            />
+          </>
+        }
+      />
+
+      {/* ── Direct Contact Channels (Full-Width Asymmetric Bento Band) ── */}
+      <section className="relative w-full bg-white dark:bg-[#0C0D10] py-12 sm:py-16 border-b border-black/10 dark:border-white/[0.08] transition-colors duration-300">
+        <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+            {/* Email Direct Card (5 cols) */}
+            <BentoCard className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between gap-6">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-2xl bg-[#0CABA3]/12 border border-[#0CABA3]/25 text-[#0CABA3] flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-mono uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                      Direct Email
                     </div>
+                    <a
+                      href="mailto:hazsolssolution@gmail.com"
+                      className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white hover:text-[#0CABA3] transition-colors break-all"
+                    >
+                      hazsolssolution@gmail.com
+                    </a>
+                  </div>
                 </div>
-            </main>
-            <ContactForm />
-            <Footer />
-        </>
-    );
+
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  aria-label="Copy email address"
+                  className="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/10 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-[#0CABA3] hover:border-[#0CABA3] transition-colors shrink-0 cursor-pointer"
+                >
+                  {copiedEmail ? (
+                    <Check className="w-4 h-4 text-emerald-500" />
+                  ) : (
+                    <Copy className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                Messages go straight to the people building your project—no sales handoffs.
+              </p>
+            </BentoCard>
+
+            {/* WhatsApp Direct Line Card (4 cols) */}
+            <BentoCard className="lg:col-span-4 p-6 sm:p-8 flex flex-col justify-between gap-6">
+              <a
+                href="https://wa.me/923434147056"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between gap-3 group/wa"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-2xl bg-[#0CABA3]/12 border border-[#0CABA3]/25 text-[#0CABA3] flex items-center justify-center shrink-0">
+                    <MessageCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-mono uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                      WhatsApp &amp; Direct Line
+                    </div>
+                    <div className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white group-hover/wa:text-[#0CABA3] transition-colors">
+                      +92 343 414 7056
+                    </div>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-5 h-5 text-gray-400 group-hover/wa:text-[#0CABA3] transition-colors" />
+              </a>
+
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                Fast voice notes or quick scoping chats during global working
+                hours.
+              </p>
+            </BentoCard>
+
+            {/* Response SLA & Local Timezone Bento Card (3 cols Dark Accent) */}
+            <BentoCard
+              surface="dark"
+              className="lg:col-span-3 p-6 sm:p-8 flex flex-col justify-between gap-5"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="inline-flex items-center gap-2 text-[11px] font-mono font-semibold uppercase tracking-wider text-emerald-400">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  Replies Under 24h
+                </span>
+                <Sparkles className="w-4 h-4 text-[#0CABA3]" />
+              </div>
+
+              <div>
+                <div className="text-[11px] font-mono uppercase tracking-wider text-white/45 mb-1.5">
+                  Your Local Time
+                </div>
+                <VisitorClock
+                  className="flex items-center gap-1.5 text-sm text-white font-medium"
+                  iconClassName="w-4 h-4 text-[#0CABA3]"
+                  placeholderWidthClassName="w-28"
+                />
+              </div>
+            </BentoCard>
+
+            {/* Full-Width Scope Quick Bar (12 cols) */}
+            <div className="lg:col-span-12 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-[#F8F9FA] dark:bg-[#13151C] border border-black/[0.06] dark:border-white/[0.08] px-5 py-4">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <Clock className="w-3.5 h-3.5 text-[#0CABA3]" />
+                Need details on a specific service first?
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {SERVICE_SCOPES.map((srv) => (
+                  <Link
+                    key={srv.href}
+                    href={srv.href}
+                    className="inline-flex items-center gap-1 rounded-full border border-black/[0.08] dark:border-white/10 bg-white dark:bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-200 hover:border-[#0CABA3] hover:text-[#0CABA3] transition-colors"
+                  >
+                    <span>{srv.label}</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Flagship Engineering Contact Form ── */}
+      <ContactForm />
+
+      <Footer />
+    </main>
+  );
 }

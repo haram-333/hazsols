@@ -1,182 +1,138 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import emailjs from '@emailjs/browser';
+import React, { useState, useRef, useEffect } from "react";
+import emailjs from "@emailjs/browser";
+import { ChevronDown, ArrowRight, CheckCircle2, AlertCircle, ShieldCheck, Check } from "lucide-react";
+
+const SERVICE_OPTIONS = [
+  { value: "Web Application", label: "Web Application (Next.js / React)" },
+  { value: "Mobile App", label: "Mobile Application (iOS / Android)" },
+  { value: "Custom Backend", label: "Custom Backend & API Development" },
+  { value: "E-Commerce", label: "E-Commerce Storefront & Checkout" },
+  { value: "Code Audit", label: "Codebase Audit & Performance Tuning" },
+];
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    budget: '',
-    companyName: '',
-    companyDomain: '',
-    region: '',
-    services: [] as string[],
-    projectDetails: ''
+    name: "",
+    company: "",
+    email: "",
+    subject: "Web Application",
+    message: "",
   });
 
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const services = [
-    'Web Development',
-    'Mobile App Development',
-    'Gen AI',
-    'E-commerce Solutions',
-    'WordPress Development',
-    'Shopify Development',
-    'SEO Services'
-  ];
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
-    // Clear error when user starts typing
+
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: "",
       }));
     }
   };
 
-  const handleServiceChange = (service: string) => {
-    setFormData(prev => ({
-      ...prev,
-      services: prev.services.includes(service)
-        ? prev.services.filter(s => s !== service)
-        : [...prev.services, service]
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Basic validation
-    const newErrors: {[key: string]: string} = {};
-    
-    if (!formData.firstName) newErrors.firstName = 'Please complete this required field.';
-    if (!formData.lastName) newErrors.lastName = 'Please complete this required field.';
-    if (!formData.email) newErrors.email = 'Please complete this required field.';
-    if (!formData.phone) newErrors.phone = 'Please complete this required field.';
-    if (!formData.budget) newErrors.budget = 'Please complete this required field.';
-    if (!formData.companyName) newErrors.companyName = 'Please complete this required field.';
-    if (!formData.region) newErrors.region = 'Please complete this required field.';
-    if (formData.services.length === 0) newErrors.services = 'Please select at least one service.';
-    if (!formData.projectDetails) newErrors.projectDetails = 'Please complete this required field.';
-    
+
+    const newErrors: { [key: string]: string } = {};
+    if (!formData.name.trim()) newErrors.name = "Please enter your name.";
+    if (!formData.company.trim()) newErrors.company = "Please enter your company or project name.";
+    if (!formData.email.trim() || !formData.email.includes("@")) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+    if (!formData.message.trim()) newErrors.message = "Please tell us a little about your project.";
+
     setErrors(newErrors);
-    
+
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true);
-      setSubmitStatus('idle');
-      
+      setSubmitStatus("idle");
+
       try {
-        // Prepare email template parameters for both emails
         const templateParams = {
-          from_name: `${formData.firstName} ${formData.lastName}`,
+          from_name: formData.name,
           from_email: formData.email,
-          phone: formData.phone,
-          company_name: formData.companyName,
-          company_domain: formData.companyDomain || 'Not provided',
-          budget: formData.budget,
-          region: formData.region,
-          services: formData.services.join(', '),
-          project_details: formData.projectDetails,
-          to_email: 'hazsolssolution@gmail.com'
+          phone: "Web Inquiry",
+          company_name: formData.company,
+          company_domain: "Submitted via Hazsols Contact Form",
+          budget: "To be discussed",
+          region: "Worldwide",
+          services: formData.subject,
+          project_details: formData.message,
+          to_email: "hazsolssolution@gmail.com",
         };
 
-        // Initialize EmailJS
-        emailjs.init('96tNctYJk2XNrx0h0');
-        
-        // Test with just one email first
-        console.log('Testing EmailJS connection...');
-        console.log('Service ID: service_r6zkxtd');
-        console.log('Template ID: template_doitlxq');
-        console.log('API Key: 96tNctYJk2XNrx0h0');
-        
-        // Try sending just the form data email first
-        console.log('Sending form data email...');
-        console.log('Template params:', templateParams);
-        
+        emailjs.init("96tNctYJk2XNrx0h0");
+
+        await emailjs.send(
+          "service_r6zkxtd",
+          "template_doitlxq",
+          templateParams
+        );
+
+        // Send confirmation email
         try {
-          const formDataResult = await emailjs.send(
-            'service_r6zkxtd',
-            'template_doitlxq',
-            templateParams
-          );
-          console.log('Form data email SUCCESS:', formDataResult);
-        } catch (formError) {
-          console.error('Form data email FAILED:', formError);
-          throw formError;
-        }
-        
-        // Send confirmation email to user
-        console.log('Sending confirmation email to user...');
-        console.log('User email:', formData.email);
-        console.log('Confirmation template params:', {
-          user_name: `${formData.firstName} ${formData.lastName}`,
-          user_email: formData.email,
-          to_email: formData.email,
-          company_name: 'HazSols',
-          company_email: 'hazsolssolution@gmail.com',
-          website_link: 'https://hazsols.com'
-        });
-        
-        try {
-          const confirmationResult = await emailjs.send(
-            'service_r6zkxtd',
-            'template_ywm0y4p',
+          await emailjs.send(
+            "service_r6zkxtd",
+            "template_ywm0y4p",
             {
-              name: `${formData.firstName} ${formData.lastName}`,
+              name: formData.name,
+              user_name: formData.name,
               email: formData.email,
-              user_name: `${formData.firstName} ${formData.lastName}`,
               user_email: formData.email,
               to_email: formData.email,
-              company_name: 'HazSols',
-              company_email: 'hazsolssolution@gmail.com',
-              website_link: 'https://hazsols.com'
+              company_name: "HazSols",
+              company_email: "hazsolssolution@gmail.com",
+              website_link: "https://hazsols.com",
             }
           );
-          console.log('Confirmation email SUCCESS:', confirmationResult);
-        } catch (confirmError) {
-          console.error('Confirmation email FAILED:', confirmError);
-          console.error('This means the user will NOT receive a confirmation email');
-          // Still continue - form data email is more important
+        } catch {
+          // Non-blocking confirmation error
         }
 
-        setSubmitStatus('success');
-        
-        // Reset form after successful submission
+        setSubmitStatus("success");
         setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          budget: '',
-          companyName: '',
-          companyDomain: '',
-          region: '',
-          services: [],
-          projectDetails: ''
+          name: "",
+          company: "",
+          email: "",
+          subject: "Web Application",
+          message: "",
         });
-        
-      } catch (error) {
-        console.error('Email sending failed:', error);
-        console.error('Error details:', {
-          message: error instanceof Error ? error.message : 'Unknown error',
-          status: (error as { status?: unknown })?.status,
-          text: (error as { text?: unknown })?.text,
-          response: (error as { response?: unknown })?.response
-        });
-        setSubmitStatus('error');
+      } catch (err) {
+        console.error("Submission failed:", err);
+        setSubmitStatus("error");
       } finally {
         setIsSubmitting(false);
       }
@@ -184,273 +140,320 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="relative w-full bg-[#020202] py-24 md:py-32 lg:py-48 border-t border-white/5 overflow-hidden">
-      {/* Mesh Gradients */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#c8f04a]/[0.02] blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[60%] bg-[#c8f04a]/[0.02] blur-[120px] rounded-full"></div>
-      </div>
+    <section 
+      id="contact"
+      className="relative w-full bg-[#08080a] text-white overflow-hidden select-none border-t border-white/[0.08]"
+    >
+      {/* Background Subtle Ambient Texture */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-[#0CABA3]/[0.025] blur-[160px] pointer-events-none" />
 
-      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+      {/* ── True Full-Width 2-Panel Split (Edge-to-Edge) ── */}
+      <div className="w-full min-h-[780px] lg:min-h-[860px] grid grid-cols-1 lg:grid-cols-12">
+        
+        {/* ─────────────────────────────────────────────────────────────
+            LEFT PANEL: Editorial Full Code Architecture Image + Signature Badge 7
+           ───────────────────────────────────────────────────────────── */}
+        <div className="lg:col-span-5 relative min-h-[600px] lg:min-h-full border-b lg:border-b-0 lg:border-r border-white/[0.08] px-8 sm:px-12 lg:px-16 xl:px-20 py-16 sm:py-20 lg:py-24 flex flex-col justify-between overflow-hidden">
           
-          {/* Left Column: Fixed Typography & Info */}
-          <div className="w-full lg:w-5/12 flex flex-col">
-            <div className="lg:sticky lg:top-32">
-              {/* Tech Pill */}
-              <div className="flex items-center gap-3 mb-8 w-fit backdrop-blur-md bg-white/5 border border-white/10 px-5 py-2.5 rounded-full shadow-[0_0_30px_rgba(255,255,255,0.03)]">
-                <div className="flex items-center justify-center w-3 h-3 rounded-full bg-[#c8f04a]/20">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#c8f04a] animate-pulse"></div>
-                </div>
-                <span className="text-white/80 font-inter font-semibold tracking-[0.25em] uppercase text-xs">
-                  Get in Touch // 05
-                </span>
+          {/* Full Image covering 100% of Left Column - Real Developer & Code Setup */}
+          <div className="absolute inset-0 z-0">
+            <img
+              src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1600&auto=format&fit=crop&q=85"
+              alt="Software Engineer Coding at Workstation"
+              className="w-full h-full object-cover object-center brightness-95 contrast-105"
+              loading="lazy"
+            />
+            {/* Targeted Top Vignette for Badge Readability */}
+            <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-[#08080a]/90 via-[#08080a]/35 to-transparent z-10 pointer-events-none" />
+            
+            {/* Targeted Bottom Vignette for Headline & Text Readability */}
+            <div className="absolute bottom-0 inset-x-0 h-[480px] bg-gradient-to-t from-[#08080a] via-[#08080a]/80 to-transparent z-10 pointer-events-none" />
+          </div>
+
+          {/* Top Row: Same Numbered Pill Badge as Section 6 */}
+          <div className="relative z-20 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white text-black text-[11px] sm:text-[12px] font-bold flex items-center justify-center shadow-lg">
+                7
               </div>
-
-              <h2 className="font-outfit font-medium text-5xl md:text-6xl lg:text-[72px] text-white tracking-tight leading-[1.1] mb-8">
-                Ready to get <br />
-                <span className="text-[#c8f04a] drop-shadow-[0_0_15px_rgba(200,240,74,0.2)]">started.</span>
-              </h2>
-              
-              <p className="font-inter text-white/70 text-lg md:text-xl leading-relaxed max-w-md mb-16">
-                Connect with us to explore how we can architect and deliver exceptional IT solutions for your enterprise infrastructure.
-              </p>
-
-              {/* Direct Inquiries Panel */}
-              <div className="flex flex-col gap-6 md:gap-8 p-6 md:p-10 bg-[#050505] border border-white/5 rounded-3xl relative overflow-hidden shadow-2xl">
-                
-                {/* Email */}
-                <div className="flex flex-col gap-2 relative z-10">
-                  <span className="font-inter text-[10px] md:text-xs text-white/40 uppercase tracking-[0.2em] font-semibold">Direct Email</span>
-                  <a href="mailto:hazsolssolution@gmail.com" className="font-outfit text-lg sm:text-xl md:text-2xl text-white font-medium hover:text-[#c8f04a] transition-colors duration-300 w-fit break-all sm:break-normal">
-                    hazsolssolution@gmail.com
-                  </a>
-                </div>
-
-                <div className="w-full h-[1px] bg-white/5"></div>
-
-                {/* Location */}
-                <div className="flex flex-col gap-2 relative z-10">
-                  <span className="font-inter text-[10px] md:text-xs text-white/40 uppercase tracking-[0.2em] font-semibold">Global Headquarters</span>
-                  <p className="font-inter text-white/80 text-base md:text-lg">
-                    Operating remotely worldwide.
-                  </p>
-                </div>
+              <div className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-wider border border-white/10 rounded-full px-4 py-1 text-white/90 bg-white/[0.04] backdrop-blur-md">
+                CONTACT US
               </div>
             </div>
           </div>
 
-          {/* Right Column: Intake Form */}
-          <div className="w-full lg:w-7/12">
-            <div className="bg-[#050505] border border-white/5 p-8 md:p-12 lg:p-16 rounded-[2.5rem] shadow-2xl">
-              <form onSubmit={handleSubmit} className="flex flex-col gap-8 md:gap-10">
-                
-                {/* Name Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
-                  <div className="flex flex-col gap-3">
-                    <label htmlFor="firstName" className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">First Name *</label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      className={`w-full bg-white/5 border ${errors.firstName ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#c8f04a]/50'} rounded-xl px-6 py-4 text-white font-inter transition-all outline-none focus:bg-white/10`}
-                    />
-                    {errors.firstName && <span className="text-red-400 text-xs font-inter uppercase tracking-wider">{errors.firstName}</span>}
-                  </div>
-                  
-                  <div className="flex flex-col gap-3">
-                    <label htmlFor="lastName" className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">Last Name *</label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      className={`w-full bg-white/5 border ${errors.lastName ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#c8f04a]/50'} rounded-xl px-6 py-4 text-white font-inter transition-all outline-none focus:bg-white/10`}
-                    />
-                    {errors.lastName && <span className="text-red-400 text-xs font-inter uppercase tracking-wider">{errors.lastName}</span>}
-                  </div>
-                </div>
+          {/* Giant Display Headline */}
+          <div className="relative z-20 my-10 lg:my-14">
+            <h2 className="font-outfit font-black text-[clamp(3.5rem,6.8vw,6.5rem)] text-white leading-[0.92] tracking-[-0.04em] drop-shadow-2xl">
+              Ready to<br />
+              Build?
+            </h2>
+            
+            <div className="mt-8 flex items-center gap-3 text-white/70">
+              <ChevronDown className="w-5 h-5 text-white/70 animate-bounce" />
+              <span className="text-xs font-mono tracking-widest uppercase">Direct engineer response</span>
+            </div>
+          </div>
 
-                {/* Email Row */}
-                <div className="flex flex-col gap-3">
-                  <label htmlFor="email" className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">Email Address *</label>
+          {/* Bottom Human Value Proposition */}
+          <div className="relative z-20 mt-auto pt-8">
+            <h3 className="font-outfit font-bold text-2xl sm:text-3xl text-white mb-2.5 leading-tight tracking-tight drop-shadow-lg">
+              Talk directly to the engineers.
+            </h3>
+            
+            <p className="text-sm sm:text-[15px] text-white/80 leading-relaxed font-normal max-w-md mb-8 drop-shadow-md">
+              No sales pitches or middle layers. You communicate directly with the team architecting, writing, and deploying your code.
+            </p>
+
+            <a
+              href="#faq"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-black/50 hover:bg-black/75 text-white font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 border border-white/20 hover:border-white/40 backdrop-blur-md shadow-xl"
+            >
+              <span>Have Questions? Check FAQ</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#0CABA3]" />
+            </a>
+          </div>
+
+        </div>
+
+        {/* ─────────────────────────────────────────────────────────────
+            RIGHT PANEL: The Form (Full-Bleed Right Side, Custom Dark Inputs)
+           ───────────────────────────────────────────────────────────── */}
+        <div className="lg:col-span-7 relative bg-[#08080c] px-8 sm:px-14 lg:px-16 xl:px-20 py-16 sm:py-20 lg:py-24 flex flex-col justify-between">
+          
+          {/* Form Header */}
+          <div className="mb-10">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs font-mono font-semibold tracking-[0.2em] uppercase text-[#0CABA3]">
+                // START YOUR PROJECT
+              </span>
+              <span className="text-xs font-mono text-white/40 tracking-wider">
+                RESPONSE WITHIN 24 HOURS
+              </span>
+            </div>
+            
+            <h3 className="font-outfit font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-none mb-4">
+              Tell us about your project.
+            </h3>
+            <p className="text-sm sm:text-[15.5px] text-white/70 font-normal leading-relaxed max-w-xl">
+              Share what you want to build, your timeline, or any technical requirements. We review every note and reply within one business day.
+            </p>
+          </div>
+
+          {/* Form Body */}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6 sm:gap-7">
+            
+            {/* Row 1: Name & Company */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="flex items-center justify-between text-[11px] font-mono font-medium tracking-[0.18em] text-white/60 uppercase mb-2.5">
+                  <span>Your Name</span>
+                  <span className="text-[#0CABA3] text-[10px] tracking-normal font-sans">* required</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Alex Vance"
+                    className={`w-full bg-white/[0.03] hover:bg-white/[0.05] focus:bg-[#0d0d12] border text-white rounded-xl px-5 py-4 text-[15px] font-sans outline-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)] transition-all duration-200 placeholder:text-white/25 ${
+                      errors.name 
+                        ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/40" 
+                        : "border-white/[0.12] hover:border-white/20 focus:border-[#0CABA3] focus:ring-1 focus:ring-[#0CABA3] focus:shadow-[0_0_20px_rgba(12,171,163,0.18)]"
+                    }`}
+                  />
+                </div>
+                {errors.name && (
+                  <span className="text-red-400 text-xs font-mono mt-1.5 block">
+                    {errors.name}
+                  </span>
+                )}
+              </div>
+
+              <div>
+                <label className="flex items-center justify-between text-[11px] font-mono font-medium tracking-[0.18em] text-white/60 uppercase mb-2.5">
+                  <span>Company or Project Name</span>
+                  <span className="text-[#0CABA3] text-[10px] tracking-normal font-sans">* required</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Acme Studio"
+                    className={`w-full bg-white/[0.03] hover:bg-white/[0.05] focus:bg-[#0d0d12] border text-white rounded-xl px-5 py-4 text-[15px] font-sans outline-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)] transition-all duration-200 placeholder:text-white/25 ${
+                      errors.company 
+                        ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/40" 
+                        : "border-white/[0.12] hover:border-white/20 focus:border-[#0CABA3] focus:ring-1 focus:ring-[#0CABA3] focus:shadow-[0_0_20px_rgba(12,171,163,0.18)]"
+                    }`}
+                  />
+                </div>
+                {errors.company && (
+                  <span className="text-red-400 text-xs font-mono mt-1.5 block">
+                    {errors.company}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Row 2: Email & Subject / Service */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="flex items-center justify-between text-[11px] font-mono font-medium tracking-[0.18em] text-white/60 uppercase mb-2.5">
+                  <span>Email Address</span>
+                  <span className="text-[#0CABA3] text-[10px] tracking-normal font-sans">* required</span>
+                </label>
+                <div className="relative">
                   <input
                     type="email"
-                    id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`w-full bg-white/5 border ${errors.email ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#c8f04a]/50'} rounded-xl px-6 py-4 text-white font-inter transition-all outline-none focus:bg-white/10`}
+                    placeholder="alex@company.com"
+                    className={`w-full bg-white/[0.03] hover:bg-white/[0.05] focus:bg-[#0d0d12] border text-white rounded-xl px-5 py-4 text-[15px] font-sans outline-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)] transition-all duration-200 placeholder:text-white/25 ${
+                      errors.email 
+                        ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/40" 
+                        : "border-white/[0.12] hover:border-white/20 focus:border-[#0CABA3] focus:ring-1 focus:ring-[#0CABA3] focus:shadow-[0_0_20px_rgba(12,171,163,0.18)]"
+                    }`}
                   />
-                  {errors.email && <span className="text-red-400 text-xs font-inter uppercase tracking-wider">{errors.email}</span>}
                 </div>
+                {errors.email && (
+                  <span className="text-red-400 text-xs font-mono mt-1.5 block">
+                    {errors.email}
+                  </span>
+                )}
+              </div>
 
-                {/* Phone Row */}
-                <div className="flex flex-col gap-3">
-                  <label htmlFor="phone" className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">Phone Number *</label>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <select
-                      name="countryCode"
-                      className="bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white/80 font-inter outline-none focus:border-[#c8f04a]/50 transition-all sm:w-[160px] appearance-none cursor-pointer"
-                    >
-                      <option value="+92" className="bg-[#050505] text-white">Pakistan (+92)</option>
-                      <option value="+1" className="bg-[#050505] text-white">USA (+1)</option>
-                      <option value="+44" className="bg-[#050505] text-white">UK (+44)</option>
-                      <option value="+91" className="bg-[#050505] text-white">India (+91)</option>
-                    </select>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      placeholder="Enter phone number"
-                      className={`flex-1 bg-white/5 border ${errors.phone ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#c8f04a]/50'} rounded-xl px-6 py-4 text-white font-inter transition-all outline-none focus:bg-white/10`}
-                    />
-                  </div>
-                  {errors.phone && <span className="text-red-400 text-xs font-inter uppercase tracking-wider">{errors.phone}</span>}
-                </div>
+              <div ref={dropdownRef} className="relative">
+                <label className="flex items-center justify-between text-[11px] font-mono font-medium tracking-[0.18em] text-white/60 uppercase mb-2.5">
+                  <span>What are you building?</span>
+                  <span className="text-white/40 text-[10px] tracking-normal font-sans">select option</span>
+                </label>
+                
+                {/* Custom Dropdown Trigger */}
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen((prev) => !prev)}
+                  className={`w-full flex items-center justify-between bg-white/[0.03] hover:bg-white/[0.05] border rounded-xl px-5 py-4 text-[15px] font-sans text-left transition-all duration-200 cursor-pointer shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)] ${
+                    isDropdownOpen
+                      ? "bg-[#0d0d12] border-[#0CABA3] ring-1 ring-[#0CABA3] shadow-[0_0_20px_rgba(12,171,163,0.18)]"
+                      : "border-white/[0.12] hover:border-white/20 text-white"
+                  }`}
+                  aria-haspopup="listbox"
+                  aria-expanded={isDropdownOpen}
+                >
+                  <span className="text-white truncate">
+                    {SERVICE_OPTIONS.find((opt) => opt.value === formData.subject)?.label || formData.subject}
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-white/50 transition-transform duration-200 shrink-0 ml-3 ${
+                      isDropdownOpen ? "rotate-180 text-[#0CABA3]" : ""
+                    }`}
+                  />
+                </button>
 
-                {/* Budget & Company Name Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
-                  <div className="flex flex-col gap-3">
-                    <label htmlFor="budget" className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">Budget *</label>
-                    <input
-                      type="text"
-                      id="budget"
-                      name="budget"
-                      value={formData.budget}
-                      onChange={handleInputChange}
-                      placeholder="$50k - $100k"
-                      className={`w-full bg-white/5 border ${errors.budget ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#c8f04a]/50'} rounded-xl px-6 py-4 text-white font-inter transition-all outline-none focus:bg-white/10`}
-                    />
-                    {errors.budget && <span className="text-red-400 text-xs font-inter uppercase tracking-wider">{errors.budget}</span>}
-                  </div>
-                  
-                  <div className="flex flex-col gap-3">
-                    <label htmlFor="companyName" className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">Company Name *</label>
-                    <input
-                      type="text"
-                      id="companyName"
-                      name="companyName"
-                      value={formData.companyName}
-                      onChange={handleInputChange}
-                      className={`w-full bg-white/5 border ${errors.companyName ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#c8f04a]/50'} rounded-xl px-6 py-4 text-white font-inter transition-all outline-none focus:bg-white/10`}
-                    />
-                    {errors.companyName && <span className="text-red-400 text-xs font-inter uppercase tracking-wider">{errors.companyName}</span>}
-                  </div>
-                </div>
-
-                {/* Domain & Region Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
-                  <div className="flex flex-col gap-3">
-                    <label htmlFor="companyDomain" className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">Company Domain</label>
-                    <input
-                      type="url"
-                      id="companyDomain"
-                      name="companyDomain"
-                      value={formData.companyDomain}
-                      onChange={handleInputChange}
-                      placeholder="https://"
-                      className="w-full bg-white/5 border border-white/10 focus:border-[#c8f04a]/50 rounded-xl px-6 py-4 text-white font-inter transition-all outline-none focus:bg-white/10"
-                    />
-                  </div>
-                  
-                  <div className="flex flex-col gap-3">
-                    <label htmlFor="region" className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">Region *</label>
-                    <select
-                      id="region"
-                      name="region"
-                      value={formData.region}
-                      onChange={handleInputChange}
-                      className={`w-full bg-white/5 border ${errors.region ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#c8f04a]/50'} rounded-xl px-6 py-4 text-white/80 font-inter transition-all outline-none appearance-none cursor-pointer`}
-                    >
-                      <option value="" className="bg-[#050505] text-white">Select Region</option>
-                      <option value="north-america" className="bg-[#050505] text-white">North America</option>
-                      <option value="europe" className="bg-[#050505] text-white">Europe</option>
-                      <option value="asia" className="bg-[#050505] text-white">Asia</option>
-                      <option value="middle-east" className="bg-[#050505] text-white">Middle East</option>
-                      <option value="africa" className="bg-[#050505] text-white">Africa</option>
-                      <option value="oceania" className="bg-[#050505] text-white">Oceania</option>
-                    </select>
-                    {errors.region && <span className="text-red-400 text-xs font-inter uppercase tracking-wider">{errors.region}</span>}
-                  </div>
-                </div>
-
-                {/* Services Pills */}
-                <div className="flex flex-col gap-4">
-                  <label className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">Required Services *</label>
-                  <div className="flex flex-wrap gap-3">
-                    {services.map((service) => {
-                      const isSelected = formData.services.includes(service);
+                {/* Custom Dark-Glass Dropdown Menu (No default OS blue popups) */}
+                {isDropdownOpen && (
+                  <div 
+                    className="absolute left-0 right-0 top-full mt-2 z-50 rounded-xl bg-[#0e0e14] backdrop-blur-2xl border border-white/15 shadow-[0_16px_40px_rgba(0,0,0,0.9)] p-1.5 flex flex-col gap-1 animate-in fade-in zoom-in-95 duration-150"
+                    role="listbox"
+                  >
+                    {SERVICE_OPTIONS.map((option) => {
+                      const isSelected = formData.subject === option.value;
                       return (
                         <button
+                          key={option.value}
                           type="button"
-                          key={service}
-                          onClick={() => handleServiceChange(service)}
-                          className={`px-5 py-2.5 rounded-full font-inter text-sm transition-all duration-300 border ${
-                            isSelected 
-                              ? 'bg-[#c8f04a]/10 border-[#c8f04a] text-[#c8f04a] shadow-[0_0_15px_rgba(200,240,74,0.15)] scale-[1.02]' 
-                              : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:border-white/20 hover:text-white'
+                          role="option"
+                          aria-selected={isSelected}
+                          onClick={() => {
+                            setFormData((prev) => ({ ...prev, subject: option.value }));
+                            setIsDropdownOpen(false);
+                          }}
+                          className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-left text-[14px] font-sans transition-all duration-150 cursor-pointer ${
+                            isSelected
+                              ? "bg-[#0CABA3]/15 text-[#0CABA3] font-semibold"
+                              : "text-white/80 hover:bg-white/[0.08] hover:text-white"
                           }`}
                         >
-                          {service}
+                          <span className="truncate">{option.label}</span>
+                          {isSelected && (
+                            <Check className="w-4 h-4 text-[#0CABA3] shrink-0 ml-2" />
+                          )}
                         </button>
                       );
                     })}
                   </div>
-                  {errors.services && <span className="text-red-400 text-xs font-inter uppercase tracking-wider">{errors.services}</span>}
-                </div>
-
-                {/* Project Details */}
-                <div className="flex flex-col gap-3">
-                  <label htmlFor="projectDetails" className="font-inter text-xs text-white/50 uppercase tracking-[0.2em] font-semibold">Project Scope *</label>
-                  <textarea
-                    id="projectDetails"
-                    name="projectDetails"
-                    value={formData.projectDetails}
-                    onChange={handleInputChange}
-                    rows={5}
-                    placeholder="Briefly describe your objectives and technical requirements..."
-                    className={`w-full bg-white/5 border ${errors.projectDetails ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-[#c8f04a]/50'} rounded-xl px-6 py-5 text-white font-inter transition-all outline-none resize-y focus:bg-white/10`}
-                  />
-                  {errors.projectDetails && <span className="text-red-400 text-xs font-inter uppercase tracking-wider">{errors.projectDetails}</span>}
-                </div>
-
-                {/* Submit Action */}
-                <div className="mt-4 flex flex-col gap-6">
-                  <button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="group relative w-full inline-flex items-center justify-center gap-4 px-10 py-5 bg-transparent border border-[#c8f04a] text-[#c8f04a] font-inter font-bold uppercase tracking-[0.2em] text-sm rounded-xl overflow-hidden transition-all hover:bg-[#c8f04a] hover:text-black hover:shadow-[0_0_40px_rgba(200,240,74,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <span className="relative z-10">{isSubmitting ? 'Sending Message...' : 'Send Message'}</span>
-                    <div className="absolute inset-0 bg-[#c8f04a]/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out skew-x-12"></div>
-                  </button>
-                  
-                  {submitStatus === 'success' && (
-                    <div className="px-6 py-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 font-inter text-sm flex items-center gap-3">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                      Message sent successfully. Our team will contact you shortly.
-                    </div>
-                  )}
-                  
-                  {submitStatus === 'error' && (
-                    <div className="px-6 py-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 font-inter text-sm flex items-center gap-3">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                      Message failed to send. Please verify your connection or contact us directly.
-                    </div>
-                  )}
-                </div>
-
-              </form>
+                )}
+              </div>
             </div>
-          </div>
+
+            {/* Row 3: Message Textarea */}
+            <div>
+              <label className="flex items-center justify-between text-[11px] font-mono font-medium tracking-[0.18em] text-white/60 uppercase mb-2.5">
+                <span>Project Details</span>
+                <span className="text-[#0CABA3] text-[10px] tracking-normal font-sans">* required</span>
+              </label>
+              <div className="relative">
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  rows={5}
+                  placeholder="Tell us what you want to build, any key features, target deadlines, or links to existing designs..."
+                  className={`w-full bg-white/[0.03] hover:bg-white/[0.05] focus:bg-[#0d0d12] border text-white rounded-xl px-5 py-4 text-[15px] font-sans outline-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)] transition-all duration-200 resize-none placeholder:text-white/25 ${
+                    errors.message 
+                      ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500/40" 
+                      : "border-white/[0.12] hover:border-white/20 focus:border-[#0CABA3] focus:ring-1 focus:ring-[#0CABA3] focus:shadow-[0_0_20px_rgba(12,171,163,0.18)]"
+                  }`}
+                />
+              </div>
+              {errors.message && (
+                <span className="text-red-400 text-xs font-mono mt-1.5 block">
+                  {errors.message}
+                </span>
+              )}
+            </div>
+
+            {/* Status Feedback Banners */}
+            {submitStatus === "success" && (
+              <div className="flex items-center gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 text-sm font-medium">
+                <CheckCircle2 className="w-5 h-5 shrink-0" />
+                <span>Message received! We will review your project notes and reply within 24 hours.</span>
+              </div>
+            )}
+
+            {submitStatus === "error" && (
+              <div className="flex items-center gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm font-medium">
+                <AlertCircle className="w-5 h-5 shrink-0" />
+                <span>Could not send message. Please check your network or email us directly at hazsolssolution@gmail.com.</span>
+              </div>
+            )}
+
+            {/* Bottom Row: Privacy Assurance & Submit Button */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-3">
+              <div className="flex items-center gap-2 text-xs text-white/40 font-mono">
+                <ShieldCheck className="w-4 h-4 text-[#0CABA3]/80" />
+                <span>Direct engineer inbox. No spam or newsletters.</span>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-10 py-4 bg-[#0CABA3] hover:bg-[#10c4bb] text-white font-mono font-bold uppercase tracking-[0.16em] text-xs sm:text-sm rounded-xl shadow-[0_4px_20px_rgba(12,171,163,0.3)] hover:shadow-[0_8px_30px_rgba(12,171,163,0.5)] transition-all duration-200 active:scale-[0.98] disabled:opacity-50 cursor-pointer"
+              >
+                <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </button>
+            </div>
+
+          </form>
 
         </div>
+
       </div>
     </section>
   );

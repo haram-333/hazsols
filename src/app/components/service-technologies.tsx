@@ -1,200 +1,445 @@
 "use client";
-import Image from 'next/image';
-import { useState } from 'react';
+
+import React from "react";
+import {
+  Bot,
+  Boxes,
+  Cloud,
+  Code2,
+  Cpu,
+  Database,
+  Globe,
+  Layers,
+  Lock,
+  Rocket,
+  Server,
+  Shield,
+  ShoppingBag,
+  Smartphone,
+  Sparkles,
+  Workflow,
+} from "lucide-react";
+import BentoCard from "./bento-card";
 
 interface ServiceTechnologiesProps {
-  serviceType: 'web' | 'app' | 'ai' | 'custom-software';
+  serviceType: "web" | "app" | "ai" | "custom-software";
 }
 
-const serviceConfig = {
+interface TechCardModule {
+  code: string;
+  title: string;
+  tagline: string;
+  description: string;
+  capabilities: string[];
+  metricLabel: string;
+  metricValue: string;
+  icon: React.ComponentType<{ className?: string }>;
+  spanClass: string;
+}
+
+const SERVICE_MODULES: Record<
+  ServiceTechnologiesProps["serviceType"],
+  {
+    eyebrow: string;
+    heading: string;
+    highlight: string;
+    subtitle: string;
+    modules: TechCardModule[];
+  }
+> = {
   web: {
-    title: "Seamless & Enterprise Ready",
-    technologies: [
+    eyebrow: "What We Build",
+    heading: "Web Applications Across",
+    highlight: "Frontend & Backend.",
+    subtitle:
+      "From high-converting business sites to multi-user web platforms, written cleanly without template bloat.",
+    modules: [
       {
-        name: "React",
-        imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop&crop=center",
-        description: "Building dynamic user interfaces with React's component-based architecture for scalable web applications."
+        code: "01 · WEB APPS",
+        title: "Full-Stack Next.js & SaaS Platforms",
+        tagline: "App Router · Middleware · Role Portals",
+        description:
+          "Customer dashboards, booking platforms, and collaborative web tools built with React, TypeScript, and PostgreSQL.",
+        capabilities: [
+          "Server Actions & SSR",
+          "Stripe Billing",
+          "Role-Based Logins",
+          "Real-Time Updates",
+        ],
+        metricLabel: "Stack",
+        metricValue: "Next.js & SQL",
+        icon: Code2,
+        spanClass: "lg:col-span-7",
       },
       {
-        name: "Next.js",
-        imageUrl: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&crop=center",
-        description: "Server-side rendering and static site generation for optimal performance and SEO optimization."
+        code: "02 · STORES",
+        title: "Online Stores & Custom Checkouts",
+        tagline: "Shopify · Stripe · Inventory Sync",
+        description:
+          "Fast-loading storefronts built for easy mobile checkout, quick catalog filtering, and stock syncing.",
+        capabilities: [
+          "Custom Storefronts",
+          "Multi-Currency Pay",
+          "Stock Sync Webhooks",
+        ],
+        metricLabel: "Focus",
+        metricValue: "Checkout Speed",
+        icon: ShoppingBag,
+        spanClass: "lg:col-span-5",
       },
       {
-        name: "WordPress",
-        imageUrl: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=400&h=300&fit=crop&crop=center",
-        description: "Content management system solutions for easy content updates and website maintenance."
+        code: "03 · CONTENT",
+        title: "CMS & Marketing Sites",
+        tagline: "Sanity · Payload · MDX",
+        description:
+          "Let your team update pages, publish articles, and launch campaigns themselves with live previews before publishing.",
+        capabilities: [
+          "Live Draft Previews",
+          "Multi-Region Copy",
+          "Clean Sitemaps",
+        ],
+        metricLabel: "Publishing",
+        metricValue: "Self-Serve",
+        icon: Globe,
+        spanClass: "lg:col-span-5",
       },
       {
-        name: "Shopify",
-        imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop&crop=center",
-        description: "E-commerce platform development for online stores with integrated payment and inventory management."
+        code: "04 · HOSTING",
+        title: "Deployment, Security & Monitoring",
+        tagline: "Vercel · AWS · Automated Backups",
+        description:
+          "Preview links on every code change, proper security headers, uptime checks, and automated database backups.",
+        capabilities: [
+          "Rate Limiting",
+          "Preview Environments",
+          "Error Monitoring",
+          "Daily DB Backups",
+        ],
+        metricLabel: "Workflow",
+        metricValue: "CI/CD Ready",
+        icon: Shield,
+        spanClass: "lg:col-span-7",
       },
-      {
-        name: "Vue.js",
-        imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop&crop=center",
-        description: "Progressive JavaScript framework for building interactive and maintainable user interfaces."
-      },
-      {
-        name: "Angular",
-        imageUrl: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=300&fit=crop&crop=center",
-        description: "Full-featured framework for enterprise-grade applications with TypeScript support."
-      },
-      {
-        name: "Svelte",
-        imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=300&fit=crop&crop=center",
-        description: "Compile-time optimized framework for building fast and lightweight web applications."
-      }
-    ]
+    ],
   },
   app: {
-    title: "Mobile-First & Scalable",
-    technologies: [
+    eyebrow: "What We Build",
+    heading: "iOS & Android Apps Built for",
+    highlight: "Real Users.",
+    subtitle:
+      "Every step of mobile development covered—from smooth screen design and offline sync to App Store approval.",
+    modules: [
       {
-        name: "Flutter",
-        imageUrl: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop&crop=center",
-        description: "Cross-platform mobile development with Flutter for iOS and Android using a single codebase."
+        code: "01 · MOBILE",
+        title: "Consumer & Business Mobile Apps",
+        tagline: "React Native · Flutter · Native Modules",
+        description:
+          "Customer apps, booking tools, and field team software tuned to open quickly and respond naturally on both platforms.",
+        capabilities: [
+          "FaceID & Passkeys",
+          "Location Services",
+          "Camera & Bluetooth",
+          "Dark & Light Modes",
+        ],
+        metricLabel: "Targets",
+        metricValue: "iOS & Android",
+        icon: Smartphone,
+        spanClass: "lg:col-span-7",
       },
       {
-        name: "React Native",
-        imageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop&crop=center",
-        description: "Native mobile app development using React Native for shared code between platforms."
+        code: "02 · OFFLINE",
+        title: "Offline Storage & Background Sync",
+        tagline: "SQLite · Local Queues · Reconnect Sync",
+        description:
+          "Field teams and users on poor connections can keep working offline and sync updates cleanly when signal returns.",
+        capabilities: [
+          "Local Database",
+          "Queued Actions",
+          "Conflict Handling",
+        ],
+        metricLabel: "Reliability",
+        metricValue: "Offline Safe",
+        icon: Database,
+        spanClass: "lg:col-span-5",
       },
       {
-        name: "Native Android",
-        imageUrl: "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=400&h=300&fit=crop&crop=center",
-        description: "Native Android development using Java and Kotlin for optimal performance and platform integration."
-      }
-    ]
+        code: "03 · MESSAGING",
+        title: "Push Notifications & Live Updates",
+        tagline: "APNs · FCM · WebSockets",
+        description:
+          "Order tracking, chat threads, instant alerts, and deep links that open straight to the right screen inside your app.",
+        capabilities: [
+          "Deep Linking",
+          "Actionable Alerts",
+          "Live Status Updates",
+        ],
+        metricLabel: "Updates",
+        metricValue: "Real-Time",
+        icon: Layers,
+        spanClass: "lg:col-span-5",
+      },
+      {
+        code: "04 · LAUNCH",
+        title: "Store Submission & Updates",
+        tagline: "Fastlane · TestFlight · Play Console",
+        description:
+          "Automated app signing, internal beta testing tracks, staged rollouts, and crash reports handled cleanly.",
+        capabilities: [
+          "Beta TestFlight",
+          "Staged Rollouts",
+          "Crash Reporting",
+          "Store Compliance",
+        ],
+        metricLabel: "Release Ops",
+        metricValue: "Automated CI",
+        icon: Rocket,
+        spanClass: "lg:col-span-7",
+      },
+    ],
   },
   ai: {
-    title: "Intelligent & Future-Ready",
-    technologies: [
+    eyebrow: "What We Build",
+    heading: "Search Tools, Automations &",
+    highlight: "Practical AI.",
+    subtitle:
+      "AI features built to give checked answers, respect permissions, and stay predictable on cost.",
+    modules: [
       {
-        name: "Agentic AI",
-        imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop&crop=center",
-        description: "Autonomous AI agents that can reason, plan, and execute complex tasks independently."
+        code: "01 · SEARCH",
+        title: "Private Document Search (RAG)",
+        tagline: "Vector + Keyword · Source Links",
+        description:
+          "Turn internal docs, contracts, support tickets, and SQL tables into searchable tools where every answer shows its source.",
+        capabilities: [
+          "Semantic + Keyword Search",
+          "Clickable Source Links",
+          "User Access Rules",
+          "Scheduled Doc Sync",
+        ],
+        metricLabel: "Grounding",
+        metricValue: "Source Cited",
+        icon: Sparkles,
+        spanClass: "lg:col-span-7",
       },
       {
-        name: "Manual to AI Solutions",
-        imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=300&fit=crop&crop=center",
-        description: "Transforming manual processes into intelligent, automated AI-powered workflows."
+        code: "02 · WORKFLOWS",
+        title: "Task & Inbox Automation",
+        tagline: "CRM Sync · Webhooks · Human Checks",
+        description:
+          "Triage incoming leads, extract order details, update records, and hold sensitive steps for quick human sign-off.",
+        capabilities: [
+          "Typed JSON Outputs",
+          "Retry Handling",
+          "Approval Gates",
+        ],
+        metricLabel: "Safety",
+        metricValue: "Human Reviewed",
+        icon: Bot,
+        spanClass: "lg:col-span-5",
       },
       {
-        name: "Custom AI Integration",
-        imageUrl: "https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&h=300&fit=crop&crop=center",
-        description: "Seamless integration of custom AI capabilities into your existing systems and workflows."
+        code: "03 · EXTRACTION",
+        title: "Document Reading & OCR",
+        tagline: "PDFs · Invoices · Scanned Forms",
+        description:
+          "Pull structured rows out of invoices, receipts, and scanned forms directly into your database with confidence flags.",
+        capabilities: [
+          "PDF & Image Parsing",
+          "Field Validation",
+          "Exception Queue",
+        ],
+        metricLabel: "Format",
+        metricValue: "Clean Data",
+        icon: Cpu,
+        spanClass: "lg:col-span-5",
       },
       {
-        name: "NLP",
-        imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=300&fit=crop&crop=center",
-        description: "Natural Language Processing solutions for text analysis, sentiment analysis, and chatbots."
+        code: "04 · CONTROLS",
+        title: "Evaluations, Guardrails & Routing",
+        tagline: "Multi-Provider · Cost Caps · Privacy",
+        description:
+          "Switch cleanly between model providers, mask sensitive user fields, and run accuracy checks before shipping changes.",
+        capabilities: [
+          "PII Masking",
+          "Accuracy Test Runs",
+          "Spend Limits",
+          "Provider Fallback",
+        ],
+        metricLabel: "Lock-In",
+        metricValue: "Model Agnostic",
+        icon: Lock,
+        spanClass: "lg:col-span-7",
       },
-      {
-        name: "Google Cloud AI",
-        imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop&crop=center",
-        description: "Leveraging Google Cloud AI services for scalable machine learning and data analytics."
-      },
-      {
-        name: "Machine Learning",
-        imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop&crop=center",
-        description: "Custom machine learning models and algorithms for predictive analytics and data insights."
-      },
-      {
-        name: "Business AI Solutions",
-        imageUrl: "https://images.unsplash.com/photo-1555255707-c07966088b7b?w=400&h=300&fit=crop&crop=center",
-        description: "Tailored AI solutions designed to solve specific business challenges and drive growth."
-      }
-    ]
+    ],
   },
-  'custom-software': {
-    title: "Tailored & Robust",
-    technologies: [
+  "custom-software": {
+    eyebrow: "What We Build",
+    heading: "Custom Systems Built for",
+    highlight: "Your Operations.",
+    subtitle:
+      "Replace fragile spreadsheets and disconnected apps with software built directly around how your business works.",
+    modules: [
       {
-        name: "Windows Applications",
-        imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&crop=center",
-        description: "Native Windows desktop applications built for optimal performance and user experience."
+        code: "01 · PORTALS",
+        title: "Custom Internal Tools & ERPs",
+        tagline: "Workflows · Reporting · Portals",
+        description:
+          "Centralize orders, inventory, billing cycles, client onboarding, and staff approvals in one fast internal system.",
+        capabilities: [
+          "Staff & Client Views",
+          "Approval Workflows",
+          "Billing & Invoicing",
+          "CSV / PDF Exports",
+        ],
+        metricLabel: "Codebase",
+        metricValue: "100% Owned",
+        icon: Boxes,
+        spanClass: "lg:col-span-7",
       },
       {
-        name: "Desktop Applications",
-        imageUrl: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=400&h=300&fit=crop&crop=center",
-        description: "Cross-platform desktop applications that work seamlessly across different operating systems."
+        code: "02 · APIS",
+        title: "Integrations & Legacy Sync",
+        tagline: "REST · GraphQL · ERP Webhooks",
+        description:
+          "Bridge accounting software, shipping providers, payment rails, and older databases with dependable queue retries.",
+        capabilities: [
+          "Idempotent Webhooks",
+          "Failed-Job Retries",
+          "Typed Contracts",
+        ],
+        metricLabel: "Sync",
+        metricValue: "Retry Safe",
+        icon: Workflow,
+        spanClass: "lg:col-span-5",
       },
       {
-        name: "Enterprise Software",
-        imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&crop=center",
-        description: "Custom enterprise solutions designed to meet specific business requirements and workflows."
+        code: "03 · BACKEND",
+        title: "Background Workers & Heavy Jobs",
+        tagline: "Node.js · Python · Go · Queues",
+        description:
+          "Run batch exports, scheduled reports, and data imports in background queues so user screens always stay fast.",
+        capabilities: [
+          "Async Job Workers",
+          "Query Indexing",
+          "Container Deploy",
+        ],
+        metricLabel: "Processing",
+        metricValue: "Async Queues",
+        icon: Server,
+        spanClass: "lg:col-span-5",
       },
       {
-        name: "CRM Systems",
-        imageUrl: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=400&h=300&fit=crop&crop=center",
-        description: "Customer relationship management systems for streamlined sales and customer service processes."
+        code: "04 · SECURITY",
+        title: "Permissions, SSO & Audit History",
+        tagline: "Role Scopes · Workspace Isolation · Logs",
+        description:
+          "Keep customer accounts separated, support company single sign-on, and store exportable logs of important edits.",
+        capabilities: [
+          "Company SSO",
+          "Workspace Isolation",
+          "Encrypted Secrets",
+          "Activity History",
+        ],
+        metricLabel: "Governance",
+        metricValue: "Audit Ready",
+        icon: Cloud,
+        spanClass: "lg:col-span-7",
       },
-      {
-        name: "ERP Solutions",
-        imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&crop=center",
-        description: "Enterprise resource planning systems for integrated business process management."
-      },
-      {
-        name: "System Integration",
-        imageUrl: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=400&h=300&fit=crop&crop=center",
-        description: "Connecting disparate systems and applications for unified data flow and operations."
-      },
-      {
-        name: "Process Automation",
-        imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&crop=center",
-        description: "Automating repetitive tasks and workflows to improve efficiency and reduce manual errors."
-      }
-    ]
-  }
+    ],
+  },
 };
 
-export default function ServiceTechnologies({ serviceType }: ServiceTechnologiesProps) {
-  const config = serviceConfig[serviceType];
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-
-  if (!config) {
-    return null;
-  }
+export default function ServiceTechnologies({
+  serviceType,
+}: ServiceTechnologiesProps) {
+  const section = SERVICE_MODULES[serviceType];
 
   return (
-    <section id="technologies" className="service-technologies">
-      <div className="technologies-container">
-        {/* Background blurry circle */}
-        <div className="technologies-bg-circle"></div>
-        
-        {/* Content */}
-        <div className="technologies-content">
-          <h2 className="technologies-title">{config.title}</h2>
-          
-          <div className="technologies-grid">
-            {config.technologies.map((tech, index) => (
-              <div 
-                key={index}
-                className="technology-card"
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
+    <section
+      id="technologies"
+      className="w-full py-16 sm:py-24 bg-[#050608] text-white border-y border-white/[0.06] overflow-x-clip"
+    >
+      <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        {/* Header Row */}
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 sm:mb-16">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/[0.05] border border-white/[0.1] px-3.5 py-1.5 text-[11px] font-mono uppercase tracking-[0.2em] text-[#35dbd3] mb-4">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0CABA3]" />
+              {section.eyebrow}
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+              {section.heading}{" "}
+              <span className="text-[#0CABA3]">{section.highlight}</span>
+            </h2>
+          </div>
+
+          <p className="text-sm sm:text-base text-white/60 max-w-md leading-relaxed">
+            {section.subtitle}
+          </p>
+        </div>
+
+        {/* Asymmetric 12-Col Obsidian Bento Grid (7+5, 5+7) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+          {section.modules.map((mod) => {
+            const Icon = mod.icon;
+
+            return (
+              <BentoCard
+                key={mod.code}
+                surface="dark"
+                className={`${mod.spanClass} p-7 sm:p-9 flex flex-col justify-between gap-7`}
               >
-                <div className="card-image-container">
-                  <Image
-                    src={tech.imageUrl}
-                    alt={tech.name}
-                    width={400}
-                    height={300}
-                    className={`card-image ${hoveredCard === index ? 'blurred' : ''}`}
-                  />
+                <div>
+                  {/* Top Bar */}
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div>
+                      <span className="block text-[10px] font-mono uppercase tracking-[0.22em] text-[#35dbd3] mb-1.5">
+                        {mod.code}
+                      </span>
+                      <span className="text-xs font-mono text-white/45">
+                        {mod.tagline}
+                      </span>
+                    </div>
+
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#0CABA3]/15 border border-[#0CABA3]/35 text-[#35dbd3] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  {/* Title & Copy */}
+                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-3">
+                    {mod.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-white/60 leading-relaxed max-w-2xl">
+                    {mod.description}
+                  </p>
                 </div>
-                
-                <div className="card-content">
-                  <h3 className={`card-title ${hoveredCard === index ? 'hidden' : ''}`}>{tech.name}</h3>
-                  
-                  <div className={`card-description ${hoveredCard === index ? 'visible' : ''}`}>
-                    <p>{tech.description}</p>
+
+                {/* Bottom Capabilities + Metric Pill */}
+                <div className="pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                  <div className="flex flex-wrap gap-2">
+                    {mod.capabilities.map((cap) => (
+                      <span
+                        key={cap}
+                        className="rounded-lg bg-white/[0.045] border border-white/[0.08] px-2.5 py-1 text-[11px] font-medium text-white/80"
+                      >
+                        {cap}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="shrink-0 sm:text-right">
+                    <span className="block text-[10px] font-mono uppercase tracking-[0.16em] text-white/40">
+                      {mod.metricLabel}
+                    </span>
+                    <span className="text-base font-bold font-mono text-[#35dbd3]">
+                      {mod.metricValue}
+                    </span>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              </BentoCard>
+            );
+          })}
         </div>
       </div>
     </section>

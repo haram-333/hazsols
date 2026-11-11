@@ -1,196 +1,359 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Header from '@/app/components/header';
-import ContactForm from '@/app/components/contact-form';
-import Footer from '@/app/components/footer';
+import React, { useState } from "react";
+import {
+  GitBranch,
+  ShieldCheck,
+  Users,
+  Zap,
+} from "lucide-react";
+import SubpageHero from "@/app/components/subpage-hero";
+import TextRollButton from "@/app/components/text-roll-button";
+import ProcessArcTimeline, {
+  ProcessStepItem,
+} from "@/app/components/process-arc-timeline";
+import BentoCard from "@/app/components/bento-card";
+import ContactForm from "@/app/components/contact-form";
+import Footer from "@/app/components/footer";
 
-export default function HowWeDoItPage() {
-    const [mounted, setMounted] = useState(false);
+const PROCESS_ARC_STEPS: ProcessStepItem[] = [
+  {
+    number: "01",
+    phase: "Scope & Plan",
+    title: "Discovery & Planning",
+    duration: "Week 1",
+    description:
+      "We start by learning how your business works, who uses the product, and what needs to be built first. From there, we map out features and timeline cleanly.",
+    deliverables: [
+      "Feature Scope & Requirements",
+      "Technical Plan & Stack",
+      "Weekly Build Schedule",
+    ],
+    icon: "compass",
+    metricLabel: "Outcome",
+    metricValue: "Written Scope",
+  },
+  {
+    number: "02",
+    phase: "Design",
+    title: "Design & Prototyping",
+    duration: "Weeks 1–2",
+    description:
+      "We design wireframes and full Figma screens so you can click through your site or app and sign off on every screen before code starts.",
+    deliverables: [
+      "Clickable Figma Screens",
+      "Colors & Component Library",
+      "Mobile & Desktop Views",
+    ],
+    icon: "design",
+    metricLabel: "Design Output",
+    metricValue: "Figma System",
+  },
+  {
+    number: "03",
+    phase: "Build & Test",
+    title: "Development & Testing",
+    duration: "Weeks 2–5",
+    description:
+      "We build your product in weekly sprints and share live staging URLs every week so you can review progress, request changes early, and see features working.",
+    deliverables: [
+      "Weekly Staging Links",
+      "Responsive & Cross-Browser QA",
+      "Clean, Documented Code",
+    ],
+    icon: "code",
+    metricLabel: "Check-Ins",
+    metricValue: "Weekly Previews",
+  },
+  {
+    number: "04",
+    phase: "Launch",
+    title: "Deployment & Support",
+    duration: "Launch & Care",
+    description:
+      "We handle hosting, domain setup, monitoring, and app store submissions, then walk your team through managing everything cleanly.",
+    deliverables: [
+      "Live Production Launch",
+      "Error Monitoring & Backups",
+      "Team Handover & Support",
+    ],
+    icon: "rocket",
+    metricLabel: "Ownership",
+    metricValue: "100% Your IP",
+  },
+];
 
-    useEffect(() => {
-        // Set theme immediately to prevent flicker
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        setMounted(true);
-    }, []);
+const METHODOLOGY_CARDS = [
+  {
+    index: "01",
+    title: "Weekly Builds",
+    description:
+      "Work runs in short weekly cycles with live preview links, so priorities can adjust without derailing the whole schedule.",
+    icon: GitBranch,
+    spanClass: "lg:col-span-7",
+  },
+  {
+    index: "02",
+    title: "Real Testing",
+    description:
+      "Every page and API flow gets checked on actual phones and desktop browsers before anything goes live.",
+    icon: ShieldCheck,
+    spanClass: "lg:col-span-5",
+  },
+  {
+    index: "03",
+    title: "Direct Collaboration",
+    description:
+      "Quick feedback loops directly with the engineers writing your code—no endless middleman meetings.",
+    icon: Users,
+    spanClass: "lg:col-span-5",
+  },
+  {
+    index: "04",
+    title: "Fast, Practical Delivery",
+    description:
+      "We ship core features quickly without piling up messy shortcuts you have to pay to rewrite later.",
+    icon: Zap,
+    spanClass: "lg:col-span-7",
+  },
+];
 
-    if (!mounted) {
-        return (
-            <>
-                <Header />
-                <main className="how-we-do-it-page">
-                    <div className="how-we-do-it-container">
-                        <div className="how-we-do-it-header">
-                            <h1 className="how-we-do-it-title">How We Do It</h1>
-                            <p className="how-we-do-it-subtitle">Loading...</p>
-                        </div>
-                    </div>
-                </main>
-                <Footer />
-            </>
-        );
-    }
+type ToolCategory = "All" | "Development" | "Design" | "DevOps";
 
-    return (
-        <>
-            <Header />
-            <main className="how-we-do-it-page">
-                <div className="how-we-do-it-container">
-                    <div className="how-we-do-it-header">
-                        <h1 className="how-we-do-it-title">How We Do It</h1>
-                        <p className="how-we-do-it-subtitle">Our proven methodology for delivering exceptional results</p>
-                    </div>
-                    
-                    <div className="how-we-do-it-content">
-                        <section className="process-section">
-                            <h2 className="section-title">Our Development Process</h2>
-                            <div className="process-steps">
-                                <div className="process-step">
-                                    <div className="step-number">01</div>
-                                    <div className="step-content">
-                                        <h3 className="step-title">Discovery & Planning</h3>
-                                        <p className="step-description">
-                                            We start by understanding your business goals, target audience, and technical requirements. 
-                                            Our team conducts thorough research and creates a detailed project roadmap.
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                                <div className="process-step">
-                                    <div className="step-number">02</div>
-                                    <div className="step-content">
-                                        <h3 className="step-title">Design & Prototyping</h3>
-                                        <p className="step-description">
-                                            Our designers create wireframes and prototypes that bring your vision to life. 
-                                            We focus on user experience and ensure the design aligns with your brand identity.
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                                <div className="process-step">
-                                    <div className="step-number">03</div>
-                                    <div className="step-content">
-                                        <h3 className="step-title">Development & Testing</h3>
-                                        <p className="step-description">
-                                            Our developers build your solution using cutting-edge technologies. 
-                                            We follow agile methodologies and conduct rigorous testing throughout the development process.
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                                <div className="process-step">
-                                    <div className="step-number">04</div>
-                                    <div className="step-content">
-                                        <h3 className="step-title">Deployment & Launch</h3>
-                                        <p className="step-description">
-                                            We handle the deployment process and ensure a smooth launch. 
-                                            Our team provides comprehensive training and ongoing support to ensure your success.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+const TOOL_GROUPS: Array<{
+  category: Exclude<ToolCategory, "All">;
+  spanClass: string;
+  description: string;
+  tools: string[];
+}> = [
+  {
+    category: "Development",
+    spanClass: "md:col-span-5",
+    description:
+      "Frameworks and languages we use for web apps, APIs, and mobile builds.",
+    tools: ["React", "Next.js", "TypeScript", "Node.js", "Python", "Django"],
+  },
+  {
+    category: "Design",
+    spanClass: "md:col-span-3",
+    description:
+      "Tools we use for UI systems, clickable prototypes, and brand assets.",
+    tools: ["Figma", "Adobe XD", "Sketch", "Photoshop", "Illustrator"],
+  },
+  {
+    category: "DevOps",
+    spanClass: "md:col-span-4",
+    description:
+      "Hosting, containers, automated deploys, and uptime monitoring.",
+    tools: ["Docker", "AWS", "GitHub", "CI/CD", "Monitoring"],
+  },
+];
 
-                        <section className="methodology-section">
-                            <h2 className="section-title">Our Methodology</h2>
-                            <div className="methodology-grid">
-                                <div className="methodology-card">
-                                    <div className="methodology-icon">
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M9 11H5a2 2 0 0 0-2 2v3c0 1.1.9 2 2 2h4m0-7v7m0-7h10a2 2 0 0 1 2 2v3c0 1.1-.9 2-2 2H9m0-7V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>
-                                        </svg>
-                                    </div>
-                                    <h3 className="methodology-title">Agile Development</h3>
-                                    <p className="methodology-description">
-                                        We follow agile methodologies to ensure flexibility, transparency, and continuous improvement throughout the project.
-                                    </p>
-                                </div>
-                                
-                                <div className="methodology-card">
-                                    <div className="methodology-icon">
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                        </svg>
-                                    </div>
-                                    <h3 className="methodology-title">Quality Assurance</h3>
-                                    <p className="methodology-description">
-                                        Every line of code is thoroughly tested and reviewed to ensure the highest quality and performance standards.
-                                    </p>
-                                </div>
-                                
-                                <div className="methodology-card">
-                                    <div className="methodology-icon">
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                            <circle cx="9" cy="7" r="4"/>
-                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                        </svg>
-                                    </div>
-                                    <h3 className="methodology-title">Collaborative Approach</h3>
-                                    <p className="methodology-description">
-                                        We work closely with your team, providing regular updates and incorporating your feedback at every stage.
-                                    </p>
-                                </div>
-                                
-                                <div className="methodology-card">
-                                    <div className="methodology-icon">
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                                        </svg>
-                                    </div>
-                                    <h3 className="methodology-title">Fast Delivery</h3>
-                                    <p className="methodology-description">
-                                        We deliver results quickly without compromising quality, helping you get to market faster.
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
+const TOOL_TABS: ToolCategory[] = ["All", "Development", "Design", "DevOps"];
 
-                        <section className="tools-section">
-                            <h2 className="section-title">Tools & Technologies</h2>
-                            <div className="tools-grid">
-                                <div className="tool-category">
-                                    <h3 className="category-title">Development</h3>
-                                    <div className="tool-list">
-                                        <span className="tool-item">React</span>
-                                        <span className="tool-item">Next.js</span>
-                                        <span className="tool-item">TypeScript</span>
-                                        <span className="tool-item">Node.js</span>
-                                        <span className="tool-item">Python</span>
-                                        <span className="tool-item">Django</span>
-                                    </div>
-                                </div>
-                                
-                                <div className="tool-category">
-                                    <h3 className="category-title">Design</h3>
-                                    <div className="tool-list">
-                                        <span className="tool-item">Figma</span>
-                                        <span className="tool-item">Adobe XD</span>
-                                        <span className="tool-item">Sketch</span>
-                                        <span className="tool-item">Photoshop</span>
-                                        <span className="tool-item">Illustrator</span>
-                                    </div>
-                                </div>
-                                
-                                <div className="tool-category">
-                                    <h3 className="category-title">DevOps</h3>
-                                    <div className="tool-list">
-                                        <span className="tool-item">Docker</span>
-                                        <span className="tool-item">AWS</span>
-                                        <span className="tool-item">GitHub</span>
-                                        <span className="tool-item">CI/CD</span>
-                                        <span className="tool-item">Monitoring</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
+export default function ProcessPage() {
+  const [activeToolTab, setActiveToolTab] = useState<ToolCategory>("All");
+
+  const visibleGroups =
+    activeToolTab === "All"
+      ? TOOL_GROUPS
+      : TOOL_GROUPS.filter((g) => g.category === activeToolTab);
+
+  return (
+    <main className="w-full min-h-screen bg-[#EFEFEF] dark:bg-[#070709] text-gray-900 dark:text-gray-100 overflow-x-clip transition-colors duration-300">
+      {/* ── Orbital Hub Hero ── */}
+      <SubpageHero
+        indexLabel="02"
+        eyebrow="How We Do It"
+        orbitPreset="process"
+        title={
+          <>
+            How We Work.
+            <br className="hidden sm:block" />{" "}
+            <span className="text-gray-500 dark:text-white/45 font-normal">
+              From First Call To Launch.
+            </span>
+          </>
+        }
+        description="A clear four-stage workflow so you always know what we are building, when you can test it, and when it goes live."
+        actions={
+          <>
+            <TextRollButton
+              text="Start a project"
+              href="#contact"
+              theme="orange"
+              fullWidthOnMobile
+            />
+            <TextRollButton
+              text="Explore services"
+              href="/services"
+              theme="outline"
+              fullWidthOnMobile
+            />
+          </>
+        }
+      />
+
+      {/* ── Section 1: Curved Orbital Arc How-It-Works Flow ── */}
+      <ProcessArcTimeline
+        eyebrow="01 / Four Stages"
+        titlePrefix="Four Steps From Brief to"
+        titleHighlight="Launch."
+        subtitle="Hover or click any stage to see what happens during that phase and what we hand over."
+        steps={PROCESS_ARC_STEPS}
+        ctaHref="#contact"
+        ctaLabel="Book A Call"
+      />
+
+      {/* ── Section 2: Our Methodology (Full-Width Asymmetric Dark Bento) ── */}
+      <section className="relative w-full bg-[#08080a] text-white py-20 sm:py-28 lg:py-32 overflow-x-clip border-b border-white/[0.08]">
+        <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[640px] h-[300px] bg-[#0CABA3]/[0.05] blur-[130px] pointer-events-none" />
+
+        <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+            <div>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white text-black text-[11px] font-bold flex items-center justify-center">
+                  2
                 </div>
-            </main>
-            <ContactForm />
-            <Footer />
-        </>
-    );
+                <div className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-wider uppercase border border-white/10 rounded-full px-4 py-1 text-white/90 bg-white/[0.04] backdrop-blur-md">
+                  How We Execute
+                </div>
+              </div>
+
+              <h2 className="text-[clamp(1.9rem,4.6vw,3.4rem)] font-medium leading-[1.08] tracking-[-0.03em] text-white">
+                How We Run Projects
+              </h2>
+            </div>
+
+            <p className="text-[15px] text-gray-400 max-w-md leading-relaxed">
+              Four practical commitments we stick to across every sprint and delivery
+              milestone.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+            {METHODOLOGY_CARDS.map((card) => {
+              const Icon = card.icon;
+              return (
+                <BentoCard
+                  key={card.index}
+                  surface="dark"
+                  className={`${card.spanClass} p-7 sm:p-9 flex flex-col justify-between min-h-[230px]`}
+                >
+                  <div className="flex items-center justify-between mb-8">
+                    <span className="text-xs font-mono font-semibold text-white/40">
+                      [{card.index}]
+                    </span>
+                    <div className="w-11 h-11 rounded-2xl bg-[#0CABA3]/12 border border-[#0CABA3]/25 text-[#0CABA3] flex items-center justify-center group-hover:bg-[#0CABA3] group-hover:text-white transition-colors duration-300">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2.5 tracking-tight">
+                      {card.title}
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-400 leading-relaxed max-w-2xl">
+                      {card.description}
+                    </p>
+                  </div>
+                </BentoCard>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 3: Tools & Technologies (Full-Width Asymmetric Bento) ── */}
+      <section className="relative w-full bg-[#EDEBE6] dark:bg-[#101115] py-20 sm:py-28 border-b border-black/10 dark:border-white/[0.08] transition-colors duration-300">
+        <div className="w-full px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
+            <div>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-[11px] font-semibold flex items-center justify-center">
+                  3
+                </div>
+                <div className="text-[12px] sm:text-[13px] font-medium uppercase tracking-wider border border-gray-300 dark:border-white/15 rounded-full px-3.5 py-1 text-gray-900 dark:text-white/90 bg-white/60 dark:bg-white/[0.04]">
+                  Tech Stack
+                </div>
+              </div>
+
+              <h2 className="text-[clamp(1.9rem,4.6vw,3.4rem)] font-medium leading-[1.08] tracking-[-0.03em] text-gray-900 dark:text-white">
+                Tools &amp; Technologies
+              </h2>
+            </div>
+
+            {/* Category Filter Pills */}
+            <div
+              role="tablist"
+              aria-label="Filter tool categories"
+              className="inline-flex flex-wrap items-center gap-1.5 bg-white dark:bg-[#181A20] p-1.5 rounded-full border border-black/10 dark:border-white/10 shadow-xs self-start"
+            >
+              {TOOL_TABS.map((tab) => {
+                const active = activeToolTab === tab;
+                return (
+                  <button
+                    key={tab}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => setActiveToolTab(tab)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                      active
+                        ? "bg-gray-900 dark:bg-[#0CABA3] text-white shadow-xs"
+                        : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div
+            className={`grid gap-6 ${
+              visibleGroups.length === 1
+                ? "grid-cols-1"
+                : "grid-cols-1 md:grid-cols-12"
+            }`}
+          >
+            {visibleGroups.map((group) => (
+              <BentoCard
+                key={group.category}
+                className={`${
+                  visibleGroups.length === 1 ? "w-full" : group.spanClass
+                } p-7 sm:p-9 flex flex-col justify-between gap-6`}
+              >
+                <div>
+                  <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#0CABA3]">
+                    {group.category}
+                  </span>
+                  <p className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    {group.description}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2.5">
+                  {group.tools.map((tool) => (
+                    <span
+                      key={tool}
+                      className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F5F5] dark:bg-white/[0.06] text-gray-900 dark:text-gray-100 border border-black/[0.06] dark:border-white/10"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </BentoCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <ContactForm />
+      <Footer />
+    </main>
+  );
 }
